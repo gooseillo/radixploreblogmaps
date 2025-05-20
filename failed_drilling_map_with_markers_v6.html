@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_583e3799b39ab7a76d44e78c9f729a37 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+<div style="position: fixed; top: 10px; right: 10px; width: 180px; z-index:9997; font-size:10px; font-family: Arial, sans-serif; background-color: rgba(255,255,255,0.9); padding: 8px; border-radius: 4px; box-shadow: 0 0 5px rgba(0,0,0,0.2);">
+    <h4 style="margin: 0 0 5px 0; font-size: 12px; color: #2c3e50; border-bottom: 1px solid #3498db; padding-bottom: 3px;">Summary</h4>
+    <div style="margin-bottom: 3px;"><strong>Total Shown:</strong> 17</div>
+    <div style="margin-bottom: 3px;"><strong>Companies:</strong> 17</div>
+    <div style="margin-bottom: 3px;"><strong>Time Span:</strong> 1973 - 2017</div>
+    <div style="margin-top: 5px; border-top: 1px solid #ddd; padding-top: 3px;">
+       <div style="margin-bottom: 2px;"><span style="color: red;">■</span> Major: 1</div>
+       <div style="margin-bottom: 2px;"><span style="color: orange;">■</span> Moderate: 3</div>
+       <div style="margin-bottom: 2px;"><span style="color: blue;">■</span> Minor: 13</div>
+    </div>
+</div>
+    <div style="position: fixed; bottom: 10px; left: 10px; width: 160px; border:1px solid rgba(0,0,0,0.2); z-index:9999; font-size:10px; background-color:rgba(255,255,255,0.9); padding: 8px; border-radius: 4px; font-family: Arial, sans-serif;">
+    <div style="font-weight: bold; font-size: 12px; margin-bottom: 5px; border-bottom: 1px solid #ccc; padding-bottom: 3px;">Legend</div>
+    <div style="margin-bottom: 3px;"><i class="fa fa-map-marker fa-lg" style="color:red; width: 12px; display: inline-block;"></i> Major Sig.</div>
+    <div style="margin-bottom: 3px;"><i class="fa fa-map-marker fa-lg" style="color:orange; width: 12px; display: inline-block;"></i> Moderate Sig.</div>
+    <div style="margin-bottom: 3px;"><i class="fa fa-map-marker fa-lg" style="color:blue; width: 12px; display: inline-block;"></i> Minor Sig.</div>
+    <div style="margin-top: 5px; border-top: 1px solid #ccc; padding-top: 3px; font-size: 9px;">
+       <div style="margin-bottom: 2px;"><i class="fa fa-square" style="color:rgba(0,0,0,0.3); border: 1px solid black;"></i> Tenement Area</div>
+       <div style="margin-bottom: 2px;"><i class="fa fa-dot-circle-o" style="color:grey;"></i> Grouped Incidents</div>
+    </div>
+</div>
+    <div style="position: fixed; top: 10px; left: 10px; width: auto; max-width: calc(100% - 220px); z-index:9998; font-size:14px; font-family: Arial, sans-serif; background-color: rgba(255, 255, 255, 0.85); padding: 8px 12px; border-radius: 4px; box-shadow: 0 0 5px rgba(0,0,0,0.2); display: none;">
+    <h3 style="margin: 0; color: #2c3e50; font-size: 1.1em;">WA "Near Miss" Drilling Activities</h3>
+    <p style="margin: 3px 0 0 0; font-size: 0.85em; color: #7f8c8d;">Historical drilling that failed to reach target. Color-coded by reported significance.</p>
+</div>
+    
+            <div class="folium-map" id="map_583e3799b39ab7a76d44e78c9f729a37" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_583e3799b39ab7a76d44e78c9f729a37 = L.map(
+                "map_583e3799b39ab7a76d44e78c9f729a37",
+                {
+                    center: [-28.0, 121.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 5,
+                    zoomControl: true,
+                    preferCanvas: false,
+                    scrollWheelZoom: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_b8facfedd34e2412a8eb07c1203a9f49 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 20, "maxZoom": 20, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abcd", "tms": false}
+            );
+        
+    
+            tile_layer_b8facfedd34e2412a8eb07c1203a9f49.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+            var marker_cluster_778be998131800eb2b4048fe5c349549 = L.markerClusterGroup(
+                {}
+            );
+        
+    
+            var marker_9aafdde61f9588aec715367fc637666b = L.marker(
+                [-23.84167546751971, 115.59478765316587],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_fdcb9361e13baa02dd530b8efb0a7180 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_9aafdde61f9588aec715367fc637666b.setIcon(icon_fdcb9361e13baa02dd530b8efb0a7180);
+        
+    
+        var popup_2101aff4ddcd4d745b8698f8626b92cd = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_cded48a33d8870606406ceb5cdf143e9 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+TWFsbGluYSBNaW5pbmcgLSBBbm9tYWx5IDc8L2g0PgogICAgICAgIDxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmOGY5ZmE7IHBhZGRpbmc6IDZweDsgYm9yZGVyLXJhZGl1czogM3B4OyBtYXJnaW4tYm90dG9tOiA4cHg7Ij4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPkRhdGU6PC9zdHJvbmc+IDE5NzM8L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5BY3Rpdml0eTo8L3N0cm9uZz4gRHJpbGxpbmcgKHVuc3VjY2Vzc2Z1bCk8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogI2U3NGMzYzsiPk91dGNvbWU6PC9zdHJvbmc+IERyaWxsIGhvbGVzIGRpZCBub3QgcmVhY2ggdGFyZ2V0PC9wPgogICAgICAgIDxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmOGY5ZmE7IHBhZGRpbmc6IDZweDsgYm9yZGVyLXJhZGl1czogM3B4OyBtYXJnaW46IDhweCAwOyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5UZWNobmljYWwgRGV0YWlsczo8L3N0cm9uZz48L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyBmb250LXNpemU6IDAuOWVtOyI+RHJpbGwgaG9sZXMgZmFpbGVkIHRvIHJlYWNoIGRlcHRoIG9mIHRhcmdldCBob3Jpem9uPC9wPgogICAgICAgIDwvZGl2PgogICAgICAgIDxwIHN0eWxlPSJmb250LXN0eWxlOiBpdGFsaWM7IGJvcmRlci1sZWZ0OiAycHggc29saWQgIzM0OThkYjsgcGFkZGluZy1sZWZ0OiA4cHg7IG1hcmdpbjogOHB4IDA7IGNvbG9yOiAjNTU1OyBmb250LXNpemU6IDAuOWVtOyI+QW5vbWFseSA3IHdhcyBzdHVkaWVkIGJ5IE1hbGxpbmEgTWluaW5nIGluIDE5NzMgYnV0IHRoZWlyIGRyaWxsIGhvbGVzIG5ldmVyIHJlYWNoZWQgdGFyZ2V0LjwvcD4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsgZm9udC1zaXplOiAwLjg1ZW07IHRleHQtYWxpZ246IHJpZ2h0OyI+PHN0cm9uZz5SZXBvcnQ6PC9zdHJvbmc+IDQ4MDEwPC9wPgogICAgPC9kaXY+CiAgICA=" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_2101aff4ddcd4d745b8698f8626b92cd.setContent(i_frame_cded48a33d8870606406ceb5cdf143e9);
+            
+        
+
+        marker_9aafdde61f9588aec715367fc637666b.bindPopup(popup_2101aff4ddcd4d745b8698f8626b92cd)
+        ;
+
+        
+    
+    
+            marker_9aafdde61f9588aec715367fc637666b.bindTooltip(
+                `<div>
+                     Mallina Mining (1973) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_f1ea54d039cdb17adcb6b1efcd2f8974 = L.marker(
+                [-22.82959912778942, 116.09248176782474],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_01e73215aec28181b7dab7b74fd7015e = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_f1ea54d039cdb17adcb6b1efcd2f8974.setIcon(icon_01e73215aec28181b7dab7b74fd7015e);
+        
+    
+        var popup_31402af269a8efe034f988abc7c9b9ec = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_95ae5e6ac07f8fabd002f44ed17549e8 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+V01DIC0gTXQgQ2xlbWVudCBQcm9zcGVjdDwvaDQ+CiAgICAgICAgPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjlmYTsgcGFkZGluZzogNnB4OyBib3JkZXItcmFkaXVzOiAzcHg7IG1hcmdpbi1ib3R0b206IDhweDsiPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+RGF0ZTo8L3N0cm9uZz4gMTk3NjwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPkFjdGl2aXR5Ojwvc3Ryb25nPiBEcmlsbGluZyAoRGlhbW9uZCBDb3JlKTwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjZTc0YzNjOyI+T3V0Y29tZTo8L3N0cm9uZz4gRm91ciBob2xlcyBkcmlsbGVkLCBub25lIHJlYWNoZWQgdGFyZ2V0czwvcD4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luOiA4cHggMDsiPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+VGVjaG5pY2FsIERldGFpbHM6PC9zdHJvbmc+PC9wPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsgZm9udC1zaXplOiAwLjllbTsiPkRyaWxsZWQgZm91ciBkaWFtb25kIGhvbGVzPC9wPgogICAgICAgIDwvZGl2PgogICAgICAgIDxwIHN0eWxlPSJmb250LXN0eWxlOiBpdGFsaWM7IGJvcmRlci1sZWZ0OiAycHggc29saWQgIzM0OThkYjsgcGFkZGluZy1sZWZ0OiA4cHg7IG1hcmdpbjogOHB4IDA7IGNvbG9yOiAjNTU1OyBmb250LXNpemU6IDAuOWVtOyI+V01DIGNhcnJpZWQgb3V0IHN1cmZhY2UgbWFwcGluZyBhbmQgZ2VvY2hlbWlzdHJ5IGFuZCBkcmlsbGVkIGZvdXIgaG9sZXMgaW50byB0aGUgcHJvc3BlY3QsIG5vbmUgb2Ygd2hpY2ggcmVhY2hlZCB0aGVpciB0YXJnZXRzPC9wPgogICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDZweCAwOyBmb250LXNpemU6IDAuODVlbTsgdGV4dC1hbGlnbjogcmlnaHQ7Ij48c3Ryb25nPlJlcG9ydDo8L3N0cm9uZz4gNDY0NDQ8L3A+CiAgICA8L2Rpdj4KICAgIA==" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_31402af269a8efe034f988abc7c9b9ec.setContent(i_frame_95ae5e6ac07f8fabd002f44ed17549e8);
+            
+        
+
+        marker_f1ea54d039cdb17adcb6b1efcd2f8974.bindPopup(popup_31402af269a8efe034f988abc7c9b9ec)
+        ;
+
+        
+    
+    
+            marker_f1ea54d039cdb17adcb6b1efcd2f8974.bindTooltip(
+                `<div>
+                     WMC (1976) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_57025464ce1bdab1a1d55f3ae9becad0 = L.marker(
+                [-31.599986315558603, 119.6000096671299],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_8765f93b77435e858c560804ad95c83a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "orange", "prefix": "fa"}
+            );
+            marker_57025464ce1bdab1a1d55f3ae9becad0.setIcon(icon_8765f93b77435e858c560804ad95c83a);
+        
+    
+        var popup_63c108ec78bfcb991873f6bdecad4452 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_c4a2569855d18513bf694d141fc4a0ef = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+R3JlYXQgVmljdG9yaWEgRXhwbG9yYXRpb24gLSBOb3J0aGVybiBlbmQgb2YgQ2VudGVuYXJ5IHByb3NwZWN0PC9oND4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luLWJvdHRvbTogOHB4OyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5EYXRlOjwvc3Ryb25nPiAxOTg2PC9wPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+QWN0aXZpdHk6PC9zdHJvbmc+IERyaWxsaW5nIChSZXZlcnNlIENpcmN1bGF0aW9uKTwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjZTc0YzNjOyI+T3V0Y29tZTo8L3N0cm9uZz4gRHJpbGxpbmcgZmFpbGVkIHRvIGludGVyc2VjdCB0aGUgdGFyZ2V0PC9wPgogICAgICAgIDxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmOGY5ZmE7IHBhZGRpbmc6IDZweDsgYm9yZGVyLXJhZGl1czogM3B4OyBtYXJnaW46IDhweCAwOyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5UZWNobmljYWwgRGV0YWlsczo8L3N0cm9uZz48L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyBmb250LXNpemU6IDAuOWVtOyI+U2l4IHJldmVyc2UgY2lyY3VsYXRpb24gaG9sZXM8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9ImZvbnQtc3R5bGU6IGl0YWxpYzsgYm9yZGVyLWxlZnQ6IDJweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWxlZnQ6IDhweDsgbWFyZ2luOiA4cHggMDsgY29sb3I6ICM1NTU7IGZvbnQtc2l6ZTogMC45ZW07Ij5HcmVhdCBWaWN0b3JpYSBFeHBsb3JhdGlvbiBoYXMgcHJldmlvdXNseSBjb21wbGV0ZWQgYSBzaXggaG9sZSByZXZlcnNlIGNpcmN1bGF0aW9uIGRyaWxsaW5nIHByb2dyYW0gb24gYSB0YXJnZXQgaW5kaWNhdGVkIGJ5IGEgR2VvcGVrbyBncm91bmQgbWFnbmV0b21ldGVyIHN1cnZleS4gVGhlIGRyaWxsaW5nIGZhaWxlZCB0byBpbnRlcnNlY3QgdGhlIHRhcmdldC48L3A+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7IGZvbnQtc2l6ZTogMC44NWVtOyB0ZXh0LWFsaWduOiByaWdodDsiPjxzdHJvbmc+UmVwb3J0Ojwvc3Ryb25nPiAyMjM4OTwvcD4KICAgIDwvZGl2PgogICAg" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_63c108ec78bfcb991873f6bdecad4452.setContent(i_frame_c4a2569855d18513bf694d141fc4a0ef);
+            
+        
+
+        marker_57025464ce1bdab1a1d55f3ae9becad0.bindPopup(popup_63c108ec78bfcb991873f6bdecad4452)
+        ;
+
+        
+    
+    
+            marker_57025464ce1bdab1a1d55f3ae9becad0.bindTooltip(
+                `<div>
+                     Great Victoria Exploration (1986) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_0152248950fe09a6e766fe5b588587e8 = L.marker(
+                [-29.870392268790756, 122.31579936241651],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_db0b1f42a1bb00253d3eadb427fff875 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_0152248950fe09a6e766fe5b588587e8.setIcon(icon_db0b1f42a1bb00253d3eadb427fff875);
+        
+    
+        var popup_f3ff8fb206f58143241138a448bc0085 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_29ee07d98a86f7f4e44db0e39432c450 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+Tm9ybWFuZHkgUG9zZWlkb24gLSBCZW5lYXRoIFJlZGJyb29rIG1pbmVyYWxpc2F0aW9uPC9oND4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luLWJvdHRvbTogOHB4OyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5EYXRlOjwvc3Ryb25nPiAxOTkyLTE5OTU8L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5BY3Rpdml0eTo8L3N0cm9uZz4gRHJpbGxpbmcgKFJldmVyc2UgQ2lyY3VsYXRpb24pPC9wPgogICAgICAgIDwvZGl2PgogICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDZweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICNlNzRjM2M7Ij5PdXRjb21lOjwvc3Ryb25nPiBPbmUgZGVlcCBob2xlIGRyaWxsZWQ7IGZhaWxlZCB0byBoaXQgdGhlIHRhcmdldDwvcD4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luOiA4cHggMDsiPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+VGVjaG5pY2FsIERldGFpbHM6PC9zdHJvbmc+PC9wPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsgZm9udC1zaXplOiAwLjllbTsiPlNoYWxsb3cgUkMgaG9sZXMgdGVzdGVkIHNvaWwgYW5vbWFsaWVzOyBvbmUgZGVlcCBSQyBob2xlIGJlbmVhdGggUmVkYnJvb2s8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9ImZvbnQtc3R5bGU6IGl0YWxpYzsgYm9yZGVyLWxlZnQ6IDJweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWxlZnQ6IDhweDsgbWFyZ2luOiA4cHggMDsgY29sb3I6ICM1NTU7IGZvbnQtc2l6ZTogMC45ZW07Ij5EcmlsbGVkIG9uZSBkZWVwIGhvbGUgYmVuZWF0aCB0aGUgUmVkYnJvb2sgbWluZXJhbGlzYXRpb24sIHdpdGhvdXQgaGl0dGluZyB0aGUgdGFyZ2V0LjwvcD4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsgZm9udC1zaXplOiAwLjg1ZW07IHRleHQtYWxpZ246IHJpZ2h0OyI+PHN0cm9uZz5SZXBvcnQ6PC9zdHJvbmc+IDQ1Njk4PC9wPgogICAgPC9kaXY+CiAgICA=" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_f3ff8fb206f58143241138a448bc0085.setContent(i_frame_29ee07d98a86f7f4e44db0e39432c450);
+            
+        
+
+        marker_0152248950fe09a6e766fe5b588587e8.bindPopup(popup_f3ff8fb206f58143241138a448bc0085)
+        ;
+
+        
+    
+    
+            marker_0152248950fe09a6e766fe5b588587e8.bindTooltip(
+                `<div>
+                     Normandy Poseidon (1992-1995) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_87cf8b58cb6d39aafcc61527c2ae987b = L.marker(
+                [-22.83551376740779, 116.04207920579455],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_e36605d1e61df82d7fb93250393929ff = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_87cf8b58cb6d39aafcc61527c2ae987b.setIcon(icon_e36605d1e61df82d7fb93250393929ff);
+        
+    
+        var popup_9d07a64a127a2f159e9fa0bb310157b2 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_f5ac7b4a29fff8f4efacba2da2761c72 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+V2VzdGVybiBNaW5pbmcgQ29ycG9yYXRpb24gTHRkIC0gTXQgQ2xlbWVudCBQcm9zcGVjdDwvaDQ+CiAgICAgICAgPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjlmYTsgcGFkZGluZzogNnB4OyBib3JkZXItcmFkaXVzOiAzcHg7IG1hcmdpbi1ib3R0b206IDhweDsiPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+RGF0ZTo8L3N0cm9uZz4gMTk3NjwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPkFjdGl2aXR5Ojwvc3Ryb25nPiBEcmlsbGluZyAoZGlhbW9uZCBjb3JlKTwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjZTc0YzNjOyI+T3V0Y29tZTo8L3N0cm9uZz4gRm91ciBob2xlcyBkcmlsbGVkLCBub25lIHJlYWNoZWQgdGFyZ2V0czsgY29udGludWl0eSBsYWNraW5nPC9wPgogICAgICAgIDxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmOGY5ZmE7IHBhZGRpbmc6IDZweDsgYm9yZGVyLXJhZGl1czogM3B4OyBtYXJnaW46IDhweCAwOyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5UZWNobmljYWwgRGV0YWlsczo8L3N0cm9uZz48L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyBmb250LXNpemU6IDAuOWVtOyI+U3VyZmFjZSBtYXBwaW5nIGFuZCBnZW9jaGVtaXN0cnkgZm9sbG93ZWQgYnkgZm91ciBkaWFtb25kIGRyaWxsIGhvbGVzPC9wPgogICAgICAgIDwvZGl2PgogICAgICAgIDxwIHN0eWxlPSJmb250LXN0eWxlOiBpdGFsaWM7IGJvcmRlci1sZWZ0OiAycHggc29saWQgIzM0OThkYjsgcGFkZGluZy1sZWZ0OiA4cHg7IG1hcmdpbjogOHB4IDA7IGNvbG9yOiAjNTU1OyBmb250LXNpemU6IDAuOWVtOyI+V01DIGNhcnJpZWQgb3V0IHN1cmZhY2UgbWFwcGluZyBhbmQgZ2VvY2hlbWlzdHJ5IGFuZCBkcmlsbGVkIGZvdXIgaG9sZXMgaW50byB0aGUgcHJvc3BlY3QsIG5vbmUgb2Ygd2hpY2ggcmVhY2hlZCB0aGVpciB0YXJnZXRzLjwvcD4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsgZm9udC1zaXplOiAwLjg1ZW07IHRleHQtYWxpZ246IHJpZ2h0OyI+PHN0cm9uZz5SZXBvcnQ6PC9zdHJvbmc+IDUzODYzPC9wPgogICAgPC9kaXY+CiAgICA=" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_9d07a64a127a2f159e9fa0bb310157b2.setContent(i_frame_f5ac7b4a29fff8f4efacba2da2761c72);
+            
+        
+
+        marker_87cf8b58cb6d39aafcc61527c2ae987b.bindPopup(popup_9d07a64a127a2f159e9fa0bb310157b2)
+        ;
+
+        
+    
+    
+            marker_87cf8b58cb6d39aafcc61527c2ae987b.bindTooltip(
+                `<div>
+                     Western Mining Corporation Ltd (1976) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_53647e0f2ba9e68ead01bf9763829ee6 = L.marker(
+                [-27.398669968066006, 118.14091706906872],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_19fa1d20ec925be4b78dcb2db2869b4c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_53647e0f2ba9e68ead01bf9763829ee6.setIcon(icon_19fa1d20ec925be4b78dcb2db2869b4c);
+        
+    
+        var popup_badf0a697ed56cf558b1b533f5dc9489 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_b23d5539c97d2fb499238ce56f0f663e = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+RnJlZXBvcnQgb2YgQXVzdHJhbGlhIEluY29ycG9yYXRlZCAtIEVlbHlhIFNvdXRoLCBFUzE54oCTMjEgKE0uSS5QLiBhbm9tYWxpZXMpPC9oND4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luLWJvdHRvbTogOHB4OyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5EYXRlOjwvc3Ryb25nPiAxOTg0PC9wPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+QWN0aXZpdHk6PC9zdHJvbmc+IERyaWxsaW5nIChSQUIpPC9wPgogICAgICAgIDwvZGl2PgogICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDZweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICNlNzRjM2M7Ij5PdXRjb21lOjwvc3Ryb25nPiBIb2xlcyBmYWlsZWQgdG8gcmVhY2ggdGFyZ2V0IGRlcHRoczsgbm8gcmVzdWx0czwvcD4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luOiA4cHggMDsiPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+VGVjaG5pY2FsIERldGFpbHM6PC9zdHJvbmc+PC9wPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsgZm9udC1zaXplOiAwLjllbTsiPkVTMTnigJMyMSB0YXJnZXRlZCBNLkkuUC4gYW5vbWFsaWVzIChFUERIMjAgJiAyNyk7IGFiYW5kb25lZCBkdWUgdG8gaGFyZG5lc3M8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9ImZvbnQtc3R5bGU6IGl0YWxpYzsgYm9yZGVyLWxlZnQ6IDJweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWxlZnQ6IDhweDsgbWFyZ2luOiA4cHggMDsgY29sb3I6ICM1NTU7IGZvbnQtc2l6ZTogMC45ZW07Ij5Ib2xlcyBFUzE54oCTMjEgLi4uIGZhaWxlZCB0byByZWFjaCB0aGVpciB0YXJnZXQgZHVlIHRvIHRoZSBoYXJkbmVzcyBvZiB0aGUgem9uZS48L3A+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7IGZvbnQtc2l6ZTogMC44NWVtOyB0ZXh0LWFsaWduOiByaWdodDsiPjxzdHJvbmc+UmVwb3J0Ojwvc3Ryb25nPiAyMDY5MjwvcD4KICAgIDwvZGl2PgogICAg" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_badf0a697ed56cf558b1b533f5dc9489.setContent(i_frame_b23d5539c97d2fb499238ce56f0f663e);
+            
+        
+
+        marker_53647e0f2ba9e68ead01bf9763829ee6.bindPopup(popup_badf0a697ed56cf558b1b533f5dc9489)
+        ;
+
+        
+    
+    
+            marker_53647e0f2ba9e68ead01bf9763829ee6.bindTooltip(
+                `<div>
+                     Freeport of Australia Incorporated (1984) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_f8f1bb68706ce52c34b3762715ae86c7 = L.marker(
+                [-24.619007626195863, 118.63487532795602],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_c42003f769100ca48653e590bcf13d3c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_f8f1bb68706ce52c34b3762715ae86c7.setIcon(icon_c42003f769100ca48653e590bcf13d3c);
+        
+    
+        var popup_6028b7c078fa0ee4217712857645b483 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_474a6fa7dd14f397e0e036f93d163fc9 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+R2VvcGVrbyBMaW1pdGVkIC8gQW1vY28gLSBBYnJhIG1hZ25ldGljIGFub21hbHk8L2g0PgogICAgICAgIDxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmOGY5ZmE7IHBhZGRpbmc6IDZweDsgYm9yZGVyLXJhZGl1czogM3B4OyBtYXJnaW4tYm90dG9tOiA4cHg7Ij4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPkRhdGU6PC9zdHJvbmc+IDE5ODA8L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5BY3Rpdml0eTo8L3N0cm9uZz4gRHJpbGxpbmcgKERpYW1vbmQpPC9wPgogICAgICAgIDwvZGl2PgogICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDZweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICNlNzRjM2M7Ij5PdXRjb21lOjwvc3Ryb25nPiBVbnN1Y2Nlc3NmdWwgZHJpbGwgaG9sZTwvcD4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luOiA4cHggMDsiPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+VGVjaG5pY2FsIERldGFpbHM6PC9zdHJvbmc+PC9wPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsgZm9udC1zaXplOiAwLjllbTsiPlNpbmdsZSBkaWFtb25kIGhvbGUgdGVzdGluZyByZW1vZGVsbGVkIG1hZ25ldGljIGRhdGE8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9ImZvbnQtc3R5bGU6IGl0YWxpYzsgYm9yZGVyLWxlZnQ6IDJweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWxlZnQ6IDhweDsgbWFyZ2luOiA4cHggMDsgY29sb3I6ICM1NTU7IGZvbnQtc2l6ZTogMC45ZW07Ij7igJx0ZXN0ZWQgdGhlIEFicmEgYW5vbWFseSB3aXRoIGFub3RoZXIgdW5zdWNjZXNzZnVsIGRyaWxsIGhvbGUgKEdlb3Bla28sIDE5ODApLuKAnTwvcD4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsgZm9udC1zaXplOiAwLjg1ZW07IHRleHQtYWxpZ246IHJpZ2h0OyI+PHN0cm9uZz5SZXBvcnQ6PC9zdHJvbmc+IDEwNTUwMjwvcD4KICAgIDwvZGl2PgogICAg" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_6028b7c078fa0ee4217712857645b483.setContent(i_frame_474a6fa7dd14f397e0e036f93d163fc9);
+            
+        
+
+        marker_f8f1bb68706ce52c34b3762715ae86c7.bindPopup(popup_6028b7c078fa0ee4217712857645b483)
+        ;
+
+        
+    
+    
+            marker_f8f1bb68706ce52c34b3762715ae86c7.bindTooltip(
+                `<div>
+                     Geopeko Limited / Amoco (1980) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_e6f622499c026882e6c5a11363de5dc0 = L.marker(
+                [-21.305837870225496, 119.76161616057888],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_c94634148da396a1d404f9d7c0da38b7 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_e6f622499c026882e6c5a11363de5dc0.setIcon(icon_c94634148da396a1d404f9d7c0da38b7);
+        
+    
+        var popup_2714e600a833c9ee1eda90dc7d0f11f1 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_3cae89894f503709326a03fed6786720 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+UmFuZG9scGggSG9sZGluZ3MgUHR5LiBMdGQgLSBMaW5lIDksOTYwRSB3ZXN0ZXJuIGV4dGVuc2lvbjwvaDQ+CiAgICAgICAgPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjlmYTsgcGFkZGluZzogNnB4OyBib3JkZXItcmFkaXVzOiAzcHg7IG1hcmdpbi1ib3R0b206IDhweDsiPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+RGF0ZTo8L3N0cm9uZz4gMDUvMTk4NzwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPkFjdGl2aXR5Ojwvc3Ryb25nPiBEcmlsbGluZyAoUGVyY3Vzc2lvbik8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogI2U3NGMzYzsiPk91dGNvbWU6PC9zdHJvbmc+IE9ubHkgOCUgb2YgcGxhbm5lZCAxLDMwMMKgbSBkcmlsbGVkOyBob2xlcyBkaWQgbm90IHBlbmV0cmF0ZSB0YXJnZXQ8L3A+CiAgICAgICAgPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjlmYTsgcGFkZGluZzogNnB4OyBib3JkZXItcmFkaXVzOiAzcHg7IG1hcmdpbjogOHB4IDA7Ij4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPlRlY2huaWNhbCBEZXRhaWxzOjwvc3Ryb25nPjwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7IGZvbnQtc2l6ZTogMC45ZW07Ij5QbGFubmVkIDIwIGxpbmVzIMOXIDLigJMzIGhvbGVzLCAxMMKgbSBzcGFjaW5nOyBhY3R1YWwgMTAwwqBtIG9uIHNpeCBob2xlczsgY29udHJhY3RvciBsYWNrZWQgZXF1aXBtZW50L2V4cGVydGlzZTwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cCBzdHlsZT0iZm9udC1zdHlsZTogaXRhbGljOyBib3JkZXItbGVmdDogMnB4IHNvbGlkICMzNDk4ZGI7IHBhZGRpbmctbGVmdDogOHB4OyBtYXJnaW46IDhweCAwOyBjb2xvcjogIzU1NTsgZm9udC1zaXplOiAwLjllbTsiPkluIE1heSBkcmlsbGluZyBjb21tZW5jZWQgYXQgdGhlIHdlc3Rlcm4gZXh0ZW5zaW9uIG9mIHRoZSB6b25lLCBidXQgaW5zdWZmaWNpZW50IGVxdWlwbWVudCBhbmQgbGFjayBvZiBleHBlcnRpc2Ugb24gcGFydCBvZiB0aGUgY29udHJhY3RvciByZXN1bHRlZCBpbiB0aGUgdGVybWluYXRpb24gb2YgdGhlIGNvbnRyYWN0IGFmdGVyIHRoZSBkcmlsbGluZyBvZiBvbmx5IDglIG9mIHRoZSBwbGFubmVkIHByb2dyYW1tZTwvcD4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsgZm9udC1zaXplOiAwLjg1ZW07IHRleHQtYWxpZ246IHJpZ2h0OyI+PHN0cm9uZz5SZXBvcnQ6PC9zdHJvbmc+IDIxMTcwPC9wPgogICAgPC9kaXY+CiAgICA=" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_2714e600a833c9ee1eda90dc7d0f11f1.setContent(i_frame_3cae89894f503709326a03fed6786720);
+            
+        
+
+        marker_e6f622499c026882e6c5a11363de5dc0.bindPopup(popup_2714e600a833c9ee1eda90dc7d0f11f1)
+        ;
+
+        
+    
+    
+            marker_e6f622499c026882e6c5a11363de5dc0.bindTooltip(
+                `<div>
+                     Randolph Holdings Pty. Ltd (05/1987) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_d841942a00afdc003981913823a7759b = L.marker(
+                [-30.849986535491666, 121.85000999501285],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_3b58106d69fb1d8aed07f4c188278a11 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_d841942a00afdc003981913823a7759b.setIcon(icon_3b58106d69fb1d8aed07f4c188278a11);
+        
+    
+        var popup_58481d519dedabab997eb990626890da = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_bfd08975826b1d5cc0a80ef88f21e8ad = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+TWVsYm91cm5lIEV4cGxvcmF0aW9uIE5MIC0gUEwgMjUvNjI0PC9oND4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luLWJvdHRvbTogOHB4OyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5EYXRlOjwvc3Ryb25nPiAwNi8xOTg34oCTMDUvMTk4ODwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPkFjdGl2aXR5Ojwvc3Ryb25nPiBEcmlsbGluZyAoUkNQKTwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjZTc0YzNjOyI+T3V0Y29tZTo8L3N0cm9uZz4gTm8gZHJpbGwgdGFyZ2V0cyBkZWZpbmVkPC9wPgogICAgICAgIDxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmOGY5ZmE7IHBhZGRpbmc6IDZweDsgYm9yZGVyLXJhZGl1czogM3B4OyBtYXJnaW46IDhweCAwOyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5UZWNobmljYWwgRGV0YWlsczo8L3N0cm9uZz48L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyBmb250LXNpemU6IDAuOWVtOyI+UmV2ZXJzZeKAkGNpcmN1bGF0aW9uIHBlcmN1c3Npb24gZHJpbGxpbmc8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9ImZvbnQtc3R5bGU6IGl0YWxpYzsgYm9yZGVyLWxlZnQ6IDJweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWxlZnQ6IDhweDsgbWFyZ2luOiA4cHggMDsgY29sb3I6ICM1NTU7IGZvbnQtc2l6ZTogMC45ZW07Ij5FeHBsb3JhdGlvbiBkdXJpbmcgdGhlIHBhc3QgeWVhciBoYXMgaW5jbHVkZWQgLi4uIFJDUCBkcmlsbGluZy48L3A+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7IGZvbnQtc2l6ZTogMC44NWVtOyB0ZXh0LWFsaWduOiByaWdodDsiPjxzdHJvbmc+UmVwb3J0Ojwvc3Ryb25nPiAyNzAyMDwvcD4KICAgIDwvZGl2PgogICAg" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_58481d519dedabab997eb990626890da.setContent(i_frame_bfd08975826b1d5cc0a80ef88f21e8ad);
+            
+        
+
+        marker_d841942a00afdc003981913823a7759b.bindPopup(popup_58481d519dedabab997eb990626890da)
+        ;
+
+        
+    
+    
+            marker_d841942a00afdc003981913823a7759b.bindTooltip(
+                `<div>
+                     Melbourne Exploration NL (06/1987–05/1988) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_77c5fe74f3c1137a0e0c503e902ab677 = L.marker(
+                [-33.575079076777364, 120.75001061786108],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_81e371140e6d94ee6544fbf6cb1740e8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_77c5fe74f3c1137a0e0c503e902ab677.setIcon(icon_81e371140e6d94ee6544fbf6cb1740e8);
+        
+    
+        var popup_4af43b2eefb9b0f960309fc6896b3d21 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_aeafc9e4a80e6eeca4d066e0bd23f183 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+U291dGhlcm4gR3JhcGhpdGUgUHR5IEx0ZCAtIEU3NC81NTYgVGVuZW1lbnQsIFdlc3QgTXVuZ2xpbnVwPC9oND4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luLWJvdHRvbTogOHB4OyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5EYXRlOjwvc3Ryb25nPiAyMiBKdW5lIDIwMTc8L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5BY3Rpdml0eTo8L3N0cm9uZz4gT3RoZXIgKERyaWxsaW5nIFJlY29tbWVuZGF0aW9uKTwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjZTc0YzNjOyI+T3V0Y29tZTo8L3N0cm9uZz4gRHJpbGxpbmcgcmVjb21tZW5kZWQgb3ZlciB0YXJnZXRzOyBubyBkcmlsbGluZyBleGVjdXRlZCBkdWUgdG8gYWNjZXNzPC9wPgogICAgICAgIDxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmOGY5ZmE7IHBhZGRpbmc6IDZweDsgYm9yZGVyLXJhZGl1czogM3B4OyBtYXJnaW46IDhweCAwOyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5UZWNobmljYWwgRGV0YWlsczo8L3N0cm9uZz48L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyBmb250LXNpemU6IDAuOWVtOyI+RGVlcCBkcmlsbGluZyB0YXJnZXRpbmcgaGlnaCBhbXBsaXR1ZGUgbWFnbmV0aWMgYW5kIEVNIGFub21hbGllczsgc2hhbGxvdyBkcmlsbGluZyBhZGphY2VudCB0byBKZXJkYWN1dHR1cCBmYXVsdDwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cCBzdHlsZT0iZm9udC1zdHlsZTogaXRhbGljOyBib3JkZXItbGVmdDogMnB4IHNvbGlkICMzNDk4ZGI7IHBhZGRpbmctbGVmdDogOHB4OyBtYXJnaW46IDhweCAwOyBjb2xvcjogIzU1NTsgZm9udC1zaXplOiAwLjllbTsiPkRyaWxsaW5nIGlzIHdhcnJhbnRlZCBhbmQgcmVjb21tZW5kZWQuLi4gYWx0aG91Z2ggdGhlIGhvbGRlciB3YXMgdW5hYmxlIHRvIG5lZ290aWF0ZSBsYW5kIGFjY2VzcyB3aXRoIGZyZWVob2xkIG93bmVycyB0byBkcmlsbCBwcm9zcGVjdGl2ZSB0YXJnZXRzLjwvcD4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsgZm9udC1zaXplOiAwLjg1ZW07IHRleHQtYWxpZ246IHJpZ2h0OyI+PHN0cm9uZz5SZXBvcnQ6PC9zdHJvbmc+IDExNDA5MzwvcD4KICAgIDwvZGl2PgogICAg" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_4af43b2eefb9b0f960309fc6896b3d21.setContent(i_frame_aeafc9e4a80e6eeca4d066e0bd23f183);
+            
+        
+
+        marker_77c5fe74f3c1137a0e0c503e902ab677.bindPopup(popup_4af43b2eefb9b0f960309fc6896b3d21)
+        ;
+
+        
+    
+    
+            marker_77c5fe74f3c1137a0e0c503e902ab677.bindTooltip(
+                `<div>
+                     Southern Graphite Pty Ltd (22 June 2017) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_18806128d3d1a2ea86a4f1723f1f44e1 = L.marker(
+                [-28.297375885440722, 121.07481116131945],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_9faa1d774fb8d7691cc069b30824ec50 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_18806128d3d1a2ea86a4f1723f1f44e1.setIcon(icon_9faa1d774fb8d7691cc069b30824ec50);
+        
+    
+        var popup_2ade9fd6ce1791f71aeed1df588c48a0 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_892768fffeaa35747efda70667735758 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+RXNzbyBFeHBsb3JhdGlvbiBhbmQgUHJvZHVjdGlvbiBBdXN0cmFsaWEgSW5jLiAtIExlaG1hbnMgV2VsbCAoR29hbm5hIFBhdGNoKTwvaDQ+CiAgICAgICAgPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjlmYTsgcGFkZGluZzogNnB4OyBib3JkZXItcmFkaXVzOiAzcHg7IG1hcmdpbi1ib3R0b206IDhweDsiPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+RGF0ZTo8L3N0cm9uZz4gRWFybHkgMTk3NjwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPkFjdGl2aXR5Ojwvc3Ryb25nPiBEcmlsbGluZyAoUGVyY3Vzc2lvbik8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogI2U3NGMzYzsiPk91dGNvbWU6PC9zdHJvbmc+IFBvb3IgZHJpbGwgcmVzdWx0czsgdGFyZ2V0IGRyb3BwZWQ8L3A+CiAgICAgICAgPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjlmYTsgcGFkZGluZzogNnB4OyBib3JkZXItcmFkaXVzOiAzcHg7IG1hcmdpbjogOHB4IDA7Ij4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPlRlY2huaWNhbCBEZXRhaWxzOjwvc3Ryb25nPjwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7IGZvbnQtc2l6ZTogMC45ZW07Ij5Hb3NzYW4gdGFyZ2V0IHRlc3RlZDsgcm90YXJ5IGRyaWxsIGhvbGVzPC9wPgogICAgICAgIDwvZGl2PgogICAgICAgIDxwIHN0eWxlPSJmb250LXN0eWxlOiBpdGFsaWM7IGJvcmRlci1sZWZ0OiAycHggc29saWQgIzM0OThkYjsgcGFkZGluZy1sZWZ0OiA4cHg7IG1hcmdpbjogOHB4IDA7IGNvbG9yOiAjNTU1OyBmb250LXNpemU6IDAuOWVtOyI+QSBnb3NzYW4gdGFyZ2V0IHdhcyB0ZXN0ZWQgbmVhciBMZWhtYW5zIFdlbGwgYnV0IGRyaWxsIHJlc3VsdHMgd2VyZSBwb29yIGFuZCB0aGUgY2xhaW1zIHdlcmUgZHJvcHBlZCBpbiBlYXJseSAxOTc2LjwvcD4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsgZm9udC1zaXplOiAwLjg1ZW07IHRleHQtYWxpZ246IHJpZ2h0OyI+PHN0cm9uZz5SZXBvcnQ6PC9zdHJvbmc+IDc1ODg8L3A+CiAgICA8L2Rpdj4KICAgIA==" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_2ade9fd6ce1791f71aeed1df588c48a0.setContent(i_frame_892768fffeaa35747efda70667735758);
+            
+        
+
+        marker_18806128d3d1a2ea86a4f1723f1f44e1.bindPopup(popup_2ade9fd6ce1791f71aeed1df588c48a0)
+        ;
+
+        
+    
+    
+            marker_18806128d3d1a2ea86a4f1723f1f44e1.bindTooltip(
+                `<div>
+                     Esso Exploration and Production Australia Inc. (Early 1976) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_ee6bf160bfd83d9e8c9dc5c95dd236b3 = L.marker(
+                [-15.752607055216208, 128.86595154818522],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_f1be332f87026cb249e59f404318f9cd = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_ee6bf160bfd83d9e8c9dc5c95dd236b3.setIcon(icon_f1be332f87026cb249e59f404318f9cd);
+        
+    
+        var popup_45c2694689563fec749d4ec6f6c474c3 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_962f0a7e7f059fe11bb01e8e91b4f766 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+Q1JBIEV4cGxvcmF0aW9uIFB0eSBMdGQgLSBGb3VyIGdlb3BoeXNpY2FsIGFub21hbGllcyB3aXRoaW4gTW91bnQgQ2VjaWwgcmVnaW9uPC9oND4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luLWJvdHRvbTogOHB4OyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5EYXRlOjwvc3Ryb25nPiAxOTgyPC9wPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+QWN0aXZpdHk6PC9zdHJvbmc+IERyaWxsaW5nIChhdWdlcik8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogI2U3NGMzYzsiPk91dGNvbWU6PC9zdHJvbmc+IEFsbCBob2xlcyBmYWlsZWQgdG8gcmVhY2ggdGFyZ2V0IChhdmVyYWdlIGRlcHRoIH404oCJbSk8L3A+CiAgICAgICAgPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjlmYTsgcGFkZGluZzogNnB4OyBib3JkZXItcmFkaXVzOiAzcHg7IG1hcmdpbjogOHB4IDA7Ij4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPlRlY2huaWNhbCBEZXRhaWxzOjwvc3Ryb25nPjwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7IGZvbnQtc2l6ZTogMC45ZW07Ij5TY291dCBhdWdlciBkcmlsbGluZyBvbiBmb3VyIGFub21hbGllcyB1c2luZyBSeWFu4oCQdHlwZSByaWc7IGF2ZXJhZ2UgaG9sZSBkZXB0aCA04oCJbTwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cCBzdHlsZT0iZm9udC1zdHlsZTogaXRhbGljOyBib3JkZXItbGVmdDogMnB4IHNvbGlkICMzNDk4ZGI7IHBhZGRpbmctbGVmdDogOHB4OyBtYXJnaW46IDhweCAwOyBjb2xvcjogIzU1NTsgZm9udC1zaXplOiAwLjllbTsiPkF1Z2VyIGRyaWxsaW5nIHdhcyBjb25kdWN0ZWQgb24gZm91ciBvZiB0aGVzZSBhbm9tYWxpZXMsIGFsbCBob2xlcyBob3dldmVyIGZhaWxlZCB0byByZWFjaCB0YXJnZXQgZHVlIHRvIGFuIGluYWRlcXVhdGUgZHJpbGwgcmlnIChSeWFuLCBELk0uLCAxOTgyKS48L3A+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7IGZvbnQtc2l6ZTogMC44NWVtOyB0ZXh0LWFsaWduOiByaWdodDsiPjxzdHJvbmc+UmVwb3J0Ojwvc3Ryb25nPiA0MzYyMDwvcD4KICAgIDwvZGl2PgogICAg" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_45c2694689563fec749d4ec6f6c474c3.setContent(i_frame_962f0a7e7f059fe11bb01e8e91b4f766);
+            
+        
+
+        marker_ee6bf160bfd83d9e8c9dc5c95dd236b3.bindPopup(popup_45c2694689563fec749d4ec6f6c474c3)
+        ;
+
+        
+    
+    
+            marker_ee6bf160bfd83d9e8c9dc5c95dd236b3.bindTooltip(
+                `<div>
+                     CRA Exploration Pty Ltd (1982) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_2784815f504e90002332201d92b407c0 = L.marker(
+                [-15.752607055216208, 128.86595154818522],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_41bc3cffa63c85fab62bae8c86517c73 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_2784815f504e90002332201d92b407c0.setIcon(icon_41bc3cffa63c85fab62bae8c86517c73);
+        
+    
+        var popup_ef694e642ccdb93ec097fbe86f2d6083 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_7cb7c8c10880ce71fa5c2708d82651c9 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+Q1JBIEV4cGxvcmF0aW9uIFB0eSBMaW1pdGVkIC0gRm91ciBFTS9tYWduZXRpYyBhbm9tYWxpZXMgaW4gbGljZW5jZSBhcmVhPC9oND4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luLWJvdHRvbTogOHB4OyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5EYXRlOjwvc3Ryb25nPiAxOTgyPC9wPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+QWN0aXZpdHk6PC9zdHJvbmc+IERyaWxsaW5nIChBdWdlciBkcmlsbGluZyk8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogI2U3NGMzYzsiPk91dGNvbWU6PC9zdHJvbmc+IEFsbCBob2xlcyBmYWlsZWQgdG8gcmVhY2ggdGFyZ2V0IChhdmcgZGVwdGggNMKgbSk8L3A+CiAgICAgICAgPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjlmYTsgcGFkZGluZzogNnB4OyBib3JkZXItcmFkaXVzOiAzcHg7IG1hcmdpbjogOHB4IDA7Ij4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPlRlY2huaWNhbCBEZXRhaWxzOjwvc3Ryb25nPjwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7IGZvbnQtc2l6ZTogMC45ZW07Ij5TY291dCBhdWdlciBkcmlsbGluZyBvbiBmb3VyIGFub21hbGllczsgcmlnIGluYWRlcXVhdGU7IGF2ZXJhZ2UgaG9sZSBkZXB0aCA0wqBtPC9wPgogICAgICAgIDwvZGl2PgogICAgICAgIDxwIHN0eWxlPSJmb250LXN0eWxlOiBpdGFsaWM7IGJvcmRlci1sZWZ0OiAycHggc29saWQgIzM0OThkYjsgcGFkZGluZy1sZWZ0OiA4cHg7IG1hcmdpbjogOHB4IDA7IGNvbG9yOiAjNTU1OyBmb250LXNpemU6IDAuOWVtOyI+QXVnZXIgZHJpbGxpbmcgd2FzIGNvbmR1Y3RlZCBvbiBmb3VyIG9mIHRoZXNlIGFub21hbGllcywgYWxsIGhvbGVzIGhvd2V2ZXIgZmFpbGVkIHRvIHJlYWNoIHRhcmdldCBkdWUgdG8gYW4gaW5hZGVxdWF0ZSBkcmlsbCByaWcuPC9wPgogICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDZweCAwOyBmb250LXNpemU6IDAuODVlbTsgdGV4dC1hbGlnbjogcmlnaHQ7Ij48c3Ryb25nPlJlcG9ydDo8L3N0cm9uZz4gNDM2MjA8L3A+CiAgICA8L2Rpdj4KICAgIA==" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_ef694e642ccdb93ec097fbe86f2d6083.setContent(i_frame_7cb7c8c10880ce71fa5c2708d82651c9);
+            
+        
+
+        marker_2784815f504e90002332201d92b407c0.bindPopup(popup_ef694e642ccdb93ec097fbe86f2d6083)
+        ;
+
+        
+    
+    
+            marker_2784815f504e90002332201d92b407c0.bindTooltip(
+                `<div>
+                     CRA Exploration Pty Limited (1982) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_15b2263219594229bae95f2d9537d8f7 = L.marker(
+                [-28.047246758028006, 117.87718325315144],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_c70a1f9239aef28d004476c72cb05370 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "orange", "prefix": "fa"}
+            );
+            marker_15b2263219594229bae95f2d9537d8f7.setIcon(icon_c70a1f9239aef28d004476c72cb05370);
+        
+    
+        var popup_23cda5d636814744f77f5e94691255ab = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_d01580cce0456adb7103996774ddae58 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+TWV0YW5hIE1pbmVyYWxzIE4uTC4gKFBhcmtpbnNvbiByaWcgc3ViY29udHJhY3QpIC0gQW5vbWFsaWVzIGFuZCBmcmluZ2UgdGFyZ2V0cywgTWF5Zmxvd2VyIGxlYXNlPC9oND4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luLWJvdHRvbTogOHB4OyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5EYXRlOjwvc3Ryb25nPiBBcHJpbOKAk05vdmVtYmVywqAxOTg3PC9wPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+QWN0aXZpdHk6PC9zdHJvbmc+IERyaWxsaW5nICh2YWN1dW0sIFJBQiwgUkMgZm9sbG934oCRdXApPC9wPgogICAgICAgIDwvZGl2PgogICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDZweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICNlNzRjM2M7Ij5PdXRjb21lOjwvc3Ryb25nPiA3MSBob2xlcyBkcmlsbGVkOyBtYW55IGZhaWxlZCB0byByZWFjaCB0YXJnZXQgZGVwdGg8L3A+CiAgICAgICAgPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjlmYTsgcGFkZGluZzogNnB4OyBib3JkZXItcmFkaXVzOiAzcHg7IG1hcmdpbjogOHB4IDA7Ij4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPlRlY2huaWNhbCBEZXRhaWxzOjwvc3Ryb25nPjwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7IGZvbnQtc2l6ZTogMC45ZW07Ij43MSBmb2xsb3figJF1cCBob2xlczsgdmFjdXVtIGRyaWxsaW5nIHdhdGVy4oCQbGltaXRlZDsgUGFya2luc29u4oCZcyBSQUIgcmlnIHBlbmV0cmF0aW9uIGlzc3VlczwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cCBzdHlsZT0iZm9udC1zdHlsZTogaXRhbGljOyBib3JkZXItbGVmdDogMnB4IHNvbGlkICMzNDk4ZGI7IHBhZGRpbmctbGVmdDogOHB4OyBtYXJnaW46IDhweCAwOyBjb2xvcjogIzU1NTsgZm9udC1zaXplOiAwLjllbTsiPkZvbGxvd+KAkXVwIGRyaWxsaW5nIG9mIGFub21hbGllcyBpZGVudGlmaWVkIGJ5IHRoaXMgd29yayBhbmQgb2Ygb3RoZXIgcHJvc3BlY3RpdmUgdGFyZ2V0cyB3YXMgY2FycmllZCBvdXQgYnkgdmFjdXVtLCBSQUIgYW5kIFJDIHJpZ3MuIEluIHRvdGFsLCA3MSBob2xlcyB3ZXJlIGRyaWxsZWQuLi4gTWFueSBmYWlsZWQgdG8gcmVhY2ggdGFyZ2V0IGRlcHRoIGJlY2F1c2Ugb2Ygd2F0ZXIgcHJvYmxlbXMgKHZhY3V1bSkgb3IgaW5zdWZmaWNpZW50IHBlbmV0cmF0aW9uIChQYXJraW5zb24ncyBSQUIgcmlnKS48L3A+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7IGZvbnQtc2l6ZTogMC44NWVtOyB0ZXh0LWFsaWduOiByaWdodDsiPjxzdHJvbmc+UmVwb3J0Ojwvc3Ryb25nPiAyNzE4NjwvcD4KICAgIDwvZGl2PgogICAg" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_23cda5d636814744f77f5e94691255ab.setContent(i_frame_d01580cce0456adb7103996774ddae58);
+            
+        
+
+        marker_15b2263219594229bae95f2d9537d8f7.bindPopup(popup_23cda5d636814744f77f5e94691255ab)
+        ;
+
+        
+    
+    
+            marker_15b2263219594229bae95f2d9537d8f7.bindTooltip(
+                `<div>
+                     Metana Minerals N.L. (Parkinson rig subcontract) (April–November 1987) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_5c844c24e3d724d04741b6991f497585 = L.marker(
+                [-28.876584174116786, 122.52423896137002],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_ac5de3eadf442d782060454d4c896606 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_5c844c24e3d724d04741b6991f497585.setIcon(icon_ac5de3eadf442d782060454d4c896606);
+        
+    
+        var popup_353bc761134873ece4646348d8fb87d6 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_f1cd449b1ec4383e7cfe585661981042 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+THluYXMgQ29ycG9yYXRpb24gTHRkIC0gRTM4LzI1NTg8L2g0PgogICAgICAgIDxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmOGY5ZmE7IHBhZGRpbmc6IDZweDsgYm9yZGVyLXJhZGl1czogM3B4OyBtYXJnaW4tYm90dG9tOiA4cHg7Ij4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPkRhdGU6PC9zdHJvbmc+IDA3LzAzLzIwMTLCoOKAk8KgMDYvMDMvMjAxMzwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPkFjdGl2aXR5Ojwvc3Ryb25nPiBEcmlsbGluZyAoTmlsKTwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjZTc0YzNjOyI+T3V0Y29tZTo8L3N0cm9uZz4gTm8gZHJpbGwgaG9sZXMgY29tcGxldGVkPC9wPgogICAgICAgIDxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmOGY5ZmE7IHBhZGRpbmc6IDZweDsgYm9yZGVyLXJhZGl1czogM3B4OyBtYXJnaW46IDhweCAwOyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5UZWNobmljYWwgRGV0YWlsczo8L3N0cm9uZz48L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyBmb250LXNpemU6IDAuOWVtOyI+UHJvc3BlY3RzIERyaWxsZWQ6IE5pbDwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cCBzdHlsZT0iZm9udC1zdHlsZTogaXRhbGljOyBib3JkZXItbGVmdDogMnB4IHNvbGlkICMzNDk4ZGI7IHBhZGRpbmctbGVmdDogOHB4OyBtYXJnaW46IDhweCAwOyBjb2xvcjogIzU1NTsgZm9udC1zaXplOiAwLjllbTsiPlByb3NwZWN0cyBEcmlsbGVkOiBOaWw8L3A+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7IGZvbnQtc2l6ZTogMC44NWVtOyB0ZXh0LWFsaWduOiByaWdodDsiPjxzdHJvbmc+UmVwb3J0Ojwvc3Ryb25nPiA5NzY1NDwvcD4KICAgIDwvZGl2PgogICAg" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_353bc761134873ece4646348d8fb87d6.setContent(i_frame_f1cd449b1ec4383e7cfe585661981042);
+            
+        
+
+        marker_5c844c24e3d724d04741b6991f497585.bindPopup(popup_353bc761134873ece4646348d8fb87d6)
+        ;
+
+        
+    
+    
+            marker_5c844c24e3d724d04741b6991f497585.bindTooltip(
+                `<div>
+                     Lynas Corporation Ltd (07/03/2012 – 06/03/2013) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_64ed791680984340dd88e2951c17dd6a = L.marker(
+                [-21.310082474795372, 119.76659997287693],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_a0efdb704466ee62a35e50b886f2a486 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "orange", "prefix": "fa"}
+            );
+            marker_64ed791680984340dd88e2951c17dd6a.setIcon(icon_a0efdb704466ee62a35e50b886f2a486);
+        
+    
+        var popup_90884b87a0172a6a2791b38e810957b8 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_54ffe653d2333cc2f9c63abdb7e02bec = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+QWxjb2Egb2YgQXVzdHJhbGlhIExpbWl0ZWQgLSBGaWVsZGluZ3MgR3VsbHkg4oCTIHRocmVlIHNpdGVzPC9oND4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luLWJvdHRvbTogOHB4OyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5EYXRlOjwvc3Ryb25nPiAxMC8xOTc54oCTMTIvMTk3OTwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPkFjdGl2aXR5Ojwvc3Ryb25nPiBEcmlsbGluZyAoRGlhbW9uZCBkcmlsbGluZyk8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogI2U3NGMzYzsiPk91dGNvbWU6PC9zdHJvbmc+IEZhaWxlZCB0byByZWFjaCB0YXJnZXRzOyBvbmUgaG9sZSBhYm9ydGVkIGFmdGVyIDY2wqBtLCAxNTDCoG0gc2hvcnQ8L3A+CiAgICAgICAgPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjlmYTsgcGFkZGluZzogNnB4OyBib3JkZXItcmFkaXVzOiAzcHg7IG1hcmdpbjogOHB4IDA7Ij4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7Ij48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM0OThkYjsiPlRlY2huaWNhbCBEZXRhaWxzOjwvc3Ryb25nPjwvcD4KICAgICAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNHB4IDA7IGZvbnQtc2l6ZTogMC45ZW07Ij5OUSwgQlEsIEhRIHJvZHM7IHBvb3IgcmVjb3ZlcnksIHJvZHMgc3R1Y2ssIGNvcmUgNjbCoG0gb25seTsgdGFyZ2V0IGRlcHRocyAxODDigJMyNDDCoG08L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9ImZvbnQtc3R5bGU6IGl0YWxpYzsgYm9yZGVyLWxlZnQ6IDJweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWxlZnQ6IDhweDsgbWFyZ2luOiA4cHggMDsgY29sb3I6ICM1NTU7IGZvbnQtc2l6ZTogMC45ZW07Ij5BIHNpbmdsZSBkaWFtb25kIGRyaWxsIGhvbGUgd2FzIGFib3J0ZWQgMTUwwqBtIHNob3J0IG9mIHRhcmdldC4gVGhlIGhvbGUgd2FzIHN0b3BwZWQgaW4gbGVhY2hlZCBnb3NzYW5vdXMgZ3JhcGhpdGUgcmljaCBzZWRpbWVudHMgdmVpbmVkIHdpdGggY29wcGVyIHNpbGljYXRlcyBhbmQgY2FyYm9uYXRlcy48L3A+CiAgICAgICAgPHAgc3R5bGU9Im1hcmdpbjogNnB4IDA7IGZvbnQtc2l6ZTogMC44NWVtOyB0ZXh0LWFsaWduOiByaWdodDsiPjxzdHJvbmc+UmVwb3J0Ojwvc3Ryb25nPiAxMzQzODwvcD4KICAgIDwvZGl2PgogICAg" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_90884b87a0172a6a2791b38e810957b8.setContent(i_frame_54ffe653d2333cc2f9c63abdb7e02bec);
+            
+        
+
+        marker_64ed791680984340dd88e2951c17dd6a.bindPopup(popup_90884b87a0172a6a2791b38e810957b8)
+        ;
+
+        
+    
+    
+            marker_64ed791680984340dd88e2951c17dd6a.bindTooltip(
+                `<div>
+                     Alcoa of Australia Limited (10/1979–12/1979) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_5f26a72854599f2cced5169381dc52d3 = L.marker(
+                [-30.751424992935238, 119.46343502927176],
+                {}
+            ).addTo(marker_cluster_778be998131800eb2b4048fe5c349549);
+        
+    
+            var icon_8a35512ca7bf6759d2586b8dea2c0250 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "times", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_5f26a72854599f2cced5169381dc52d3.setIcon(icon_8a35512ca7bf6759d2586b8dea2c0250);
+        
+    
+        var popup_310542a26e5a37f25d7fff86de4836d8 = L.popup({"maxWidth": 320});
+
+        
+            
+                var i_frame_5f1370ee9bfca89afe84ab1fa348d350 = $(`<iframe src="data:text/html;charset=utf-8;base64,CiAgICAKICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyODBweDsgbWF4LWhlaWdodDogMjUwcHg7IG92ZXJmbG93LXk6IGF1dG87IGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB4OyBwYWRkaW5nOiA4cHg7IGJvcmRlci1yYWRpdXM6IDVweDsgYm94LXNoYWRvdzogMCAxcHggM3B4IHJnYmEoMCwwLDAsMC4yKTsiPgogICAgICAgIDxoNCBzdHlsZT0iY29sb3I6ICMyYzNlNTA7IG1hcmdpbi10b3A6IDA7IG1hcmdpbi1ib3R0b206OHB4OyBmb250LXNpemU6IDE0cHg7IGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWJvdHRvbTogNXB4OyI+RGVsdGEgR29sZCBMdGQgLSBKb2NrcyBGdXJ5PC9oND4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luLWJvdHRvbTogOHB4OyI+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5EYXRlOjwvc3Ryb25nPiBKdW5lIDE5OTk8L3A+CiAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46IDRweCAwOyI+PHN0cm9uZyBzdHlsZT0iY29sb3I6ICMzNDk4ZGI7Ij5BY3Rpdml0eTo8L3N0cm9uZz4gRHJpbGxpbmcgKFJDIERyaWxsaW5nKTwvcD4KICAgICAgICA8L2Rpdj4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjZTc0YzNjOyI+T3V0Y29tZTo8L3N0cm9uZz4gSG9sZXMgZmFpbGVkIHRvIHJlYWNoIHRhcmdldCBkZXB0aHM7IG5vIHNpZ25pZmljYW50IGFzc2F5czwvcD4KICAgICAgICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhOyBwYWRkaW5nOiA2cHg7IGJvcmRlci1yYWRpdXM6IDNweDsgbWFyZ2luOiA4cHggMDsiPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsiPjxzdHJvbmcgc3R5bGU9ImNvbG9yOiAjMzQ5OGRiOyI+VGVjaG5pY2FsIERldGFpbHM6PC9zdHJvbmc+PC9wPgogICAgICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA0cHggMDsgZm9udC1zaXplOiAwLjllbTsiPlR3byBSQyBob2xlcyAoOTlLUkM1LCA5OUtSQzYpIGRyaWxsZWQgdG8gODbCoG0gYW5kIDU2wqBtIHJlc3BlY3RpdmVseTsgYWJhbmRvbmVkIGR1ZSB0byBzbG93IGRyaWxsaW5nIGNvbmRpdGlvbnM8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHAgc3R5bGU9ImZvbnQtc3R5bGU6IGl0YWxpYzsgYm9yZGVyLWxlZnQ6IDJweCBzb2xpZCAjMzQ5OGRiOyBwYWRkaW5nLWxlZnQ6IDhweDsgbWFyZ2luOiA4cHggMDsgY29sb3I6ICM1NTU7IGZvbnQtc2l6ZTogMC45ZW07Ij5Cb3RoIGhvbGVzIGZhaWxlZCB0byByZWFjaCB0aGUgdGFyZ2V0IGRlcHRoIGR1ZSB0byBleHRyZW1lbHkgc2xvdyBkcmlsbGluZyBjb25kaXRpb25zLjwvcD4KICAgICAgICA8cCBzdHlsZT0ibWFyZ2luOiA2cHggMDsgZm9udC1zaXplOiAwLjg1ZW07IHRleHQtYWxpZ246IHJpZ2h0OyI+PHN0cm9uZz5SZXBvcnQ6PC9zdHJvbmc+IDYwNTU4PC9wPgogICAgPC9kaXY+CiAgICA=" width="300" style="border:none !important;" height="270"></iframe>`)[0];
+                popup_310542a26e5a37f25d7fff86de4836d8.setContent(i_frame_5f1370ee9bfca89afe84ab1fa348d350);
+            
+        
+
+        marker_5f26a72854599f2cced5169381dc52d3.bindPopup(popup_310542a26e5a37f25d7fff86de4836d8)
+        ;
+
+        
+    
+    
+            marker_5f26a72854599f2cced5169381dc52d3.bindTooltip(
+                `<div>
+                     Delta Gold Ltd (June 1999) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            marker_cluster_778be998131800eb2b4048fe5c349549.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_df270d8c59ee49fc05d59ae8e409785f_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_df270d8c59ee49fc05d59ae8e409785f_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_df270d8c59ee49fc05d59ae8e409785f_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_df270d8c59ee49fc05d59ae8e409785f.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_df270d8c59ee49fc05d59ae8e409785f_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_df270d8c59ee49fc05d59ae8e409785f = L.geoJson(null, {
+                onEachFeature: geo_json_df270d8c59ee49fc05d59ae8e409785f_onEachFeature,
+            
+                style: geo_json_df270d8c59ee49fc05d59ae8e409785f_styler,
+        });
+
+        function geo_json_df270d8c59ee49fc05d59ae8e409785f_add (data) {
+            geo_json_df270d8c59ee49fc05d59ae8e409785f
+                .addData(data);
+        }
+            geo_json_df270d8c59ee49fc05d59ae8e409785f_add({"features": [{"_id": {"$oid": "661ccfa70233c852e75f1c12"}, "geometry": {"coordinates": [[[[115.58469188543616, -23.915360998082612], [115.5846917111674, -23.89870417163118], [115.56803500003446, -23.898704549594388], [115.55136821697594, -23.898704926877617], [115.55135821694866, -23.898694927892173], [115.55135803894785, -23.882028088141638], [115.55135787217428, -23.865361229794264], [115.55135768525226, -23.848694362156614], [115.55135756230187, -23.832027301511612], [115.55136756224593, -23.832017301513773], [115.5680241962382, -23.832017030075654], [115.56802400633634, -23.815360015318795], [115.5680340063044, -23.815350015283947], [115.58469065069785, -23.815349742962944], [115.58469043501049, -23.79869277209474], [115.58470043394667, -23.798682772054644], [115.60135706540368, -23.798682520463665], [115.6013568515321, -23.782025647757447], [115.60135673256005, -23.76535874530535], [115.60136673252167, -23.765348745271552], [115.61803336277417, -23.76534856686352], [115.63469999896638, -23.765348369500934], [115.63470999992933, -23.76535836952404], [115.63471018085356, -23.782025275884543], [115.63471036851978, -23.79869216164345], [115.63471073821323, -23.815358940858324], [115.63470073841083, -23.815368940799946], [115.61804407765617, -23.81536915304109], [115.61804433424044, -23.8320260200495], [115.61804454629953, -23.848692905594092], [115.61804470757077, -23.865359772002183], [115.61804492892978, -23.88202664016079], [115.6180450879736, -23.898693496728523], [115.61804525930597, -23.915360333301095], [115.61803525931082, -23.915370333326788], [115.60136859845612, -23.91537062654171], [115.58470188542051, -23.915370998061178], [115.58469188543616, -23.915360998082612]]], [[[115.76802449636074, -23.86535760337462], [115.76802431938032, -23.848700797771365], [115.75136769365439, -23.848700971561538], [115.75135769365882, -23.848690971570292], [115.75135750989507, -23.83202415609748], [115.75135732584467, -23.81536732398669], [115.73470069887627, -23.81536751275262], [115.73469069887867, -23.815357512758784], [115.7346905130054, -23.798700678140097], [115.71803388743004, -23.79870086668432], [115.71802388643154, -23.798690866689334], [115.71802369871384, -23.782024030582523], [115.71802330223464, -23.76536731007078], [115.70136665194484, -23.765367501049564], [115.7013566517101, -23.765357501173668], [115.70135630947823, -23.748700747390114], [115.68469967858923, -23.74870093327218], [115.68468967860848, -23.74869093325957], [115.6846895211567, -23.73203407074048], [115.66803290668255, -23.732034248001135], [115.66802290671801, -23.732024247977254], [115.66802282344096, -23.715367367496004], [115.65136622024106, -23.715367522109613], [115.63469964164523, -23.71536765686267], [115.63020907156711, -23.715367878908], [115.63020797657317, -23.715367697906434], [115.61803305470175, -23.715367805898172], [115.61303159904791, -23.715367844892988], [115.61303067905203, -23.71536802689313], [115.60136648932348, -23.715367936423387], [115.60135648941845, -23.715357936364672], [115.60135641330855, -23.698690991425252], [115.60135616089971, -23.682024020722103], [115.60136616085035, -23.682014020675627], [115.61803272575108, -23.682013984451572], [115.6346992813788, -23.682013978390017], [115.63470928131544, -23.682023978396973], [115.63470951776651, -23.69868076830451], [115.65136608809372, -23.69868064465237], [115.66803263049333, -23.69868052338407], [115.6846991954186, -23.698680382129776], [115.70136579092916, -23.69868023621617], [115.70137579089167, -23.69869023624122], [115.7013759508037, -23.715347079186227], [115.71803248133226, -23.71534693918476], [115.73469903659851, -23.715346797772565], [115.73470903664837, -23.71535679676506], [115.73470934716794, -23.732013577415813], [115.75136615521325, -23.732013310357946], [115.76803300863455, -23.732013011218193], [115.76804300862347, -23.732023011234826], [115.76804319402748, -23.748679862723726], [115.78469987811728, -23.748679694609645], [115.78470987812703, -23.748689694610462], [115.78471001289692, -23.76535650046078], [115.78471021325083, -23.782023329634207], [115.78471039796963, -23.79869014290687], [115.7847105819875, -23.815356972027622], [115.78471076397038, -23.832023782687035], [115.78471094650702, -23.848690610849346], [115.78471113171994, -23.865357440011955], [115.78470113172227, -23.865367440026834], [115.76803449635885, -23.86536760336798], [115.76802449636074, -23.86535760337462]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M9195/0: Mangaroon gold exploration: (Annual Report) (1/1/1995-1/12/1995)", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "KING R M", "DATE_FROM": {"$date": "1995-01-01T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "1998-05-27T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1995-12-01T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=48010", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=48010", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 9777, "KEYWORDS": "Geochemistry; Soil sampling; Metal detecting; Panning; Gold", "OPERATOR": "MR KING RM", "PROJECT": "Mangaroon", "REGION": "western_australia", "REPORT_NUMBER": "48010", "REPORT_TYPE": "Annual", "REPORT_YEAR": 1996, "TARGET_COMMODITY": "GOLD", "TITLE": "Mangaroon Project, Annual Report March 1996, E09/613-614, E09/638.", "popup": "\u003cb\u003eMallina Mining\u003c/b\u003e\u003cbr\u003eLocation: Anomaly 7\u003cbr\u003eActivity: Drilling (unsuccessful)\u003cbr\u003eOutcome: Drill holes did not reach target", "time": "1996-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_df270d8c59ee49fc05d59ae8e409785f.bindTooltip(
+                `<div>
+                     Mallina Mining (1973) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_df270d8c59ee49fc05d59ae8e409785f.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_b09fe282d26bed891bd9b6c49dd0998f_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_b09fe282d26bed891bd9b6c49dd0998f_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_b09fe282d26bed891bd9b6c49dd0998f_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_b09fe282d26bed891bd9b6c49dd0998f.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_b09fe282d26bed891bd9b6c49dd0998f_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_b09fe282d26bed891bd9b6c49dd0998f = L.geoJson(null, {
+                onEachFeature: geo_json_b09fe282d26bed891bd9b6c49dd0998f_onEachFeature,
+            
+                style: geo_json_b09fe282d26bed891bd9b6c49dd0998f_styler,
+        });
+
+        function geo_json_b09fe282d26bed891bd9b6c49dd0998f_add (data) {
+            geo_json_b09fe282d26bed891bd9b6c49dd0998f
+                .addData(data);
+        }
+            geo_json_b09fe282d26bed891bd9b6c49dd0998f_add({"features": [{"_id": {"$oid": "661ccfa50233c852e75f160e"}, "geometry": {"coordinates": [[[[116.10135474378576, -22.91536316524688], [116.08468817050664, -22.915363177186297], [116.06802156648997, -22.91536320649976], [116.0680115663814, -22.91535320655115], [116.06801098259571, -22.89869625599749], [116.05135437587805, -22.898696347083344], [116.05134437584717, -22.898686348132557], [116.051343947143, -22.882029415683174], [116.03468749292377, -22.882029626429016], [116.03467749289358, -22.8820196274748], [116.03467705152661, -22.865362707631263], [116.01802056415019, -22.865362916195345], [116.00135406016332, -22.86536312386871], [116.00134406013403, -22.86535312490782], [116.00134354130363, -22.84868619693817], [116.00134318881783, -22.83201938098759], [116.00134284100896, -22.81535256371563], [116.00135284102078, -22.81534256372213], [116.01800939764155, -22.815342367988606], [116.01800908818824, -22.798685570491795], [116.01800879632417, -22.78201873352088], [116.01801879534598, -22.782008733531015], [116.03467538036382, -22.782008570450405], [116.03467512139017, -22.765351743339135], [116.03468512141691, -22.76534174335087], [116.05134172509153, -22.765341580674043], [116.05134148741507, -22.748684770784216], [116.05135148744615, -22.74867477079724], [116.06800806118491, -22.748674979361255], [116.06800793950823, -22.7320180591723], [116.06801793954267, -22.73200805818609], [116.08468454698448, -22.732008138820998], [116.08469454696822, -22.73201813880763], [116.0846946499349, -22.748685172826786], [116.08469481850261, -22.765342030338378], [116.10135135484629, -22.765342272725245], [116.11801801906527, -22.76534177713903], [116.13468449941678, -22.765341248644287], [116.13469449926944, -22.765351248602943], [116.13469466717558, -22.782008146302175], [116.15135130775685, -22.7820076578207], [116.15136130772096, -22.782017657811313], [116.15136151826438, -22.798674560421254], [116.16801840085026, -22.79867461575044], [116.16802840150258, -22.798684615913015], [116.16802913785114, -22.815341567918914], [116.18468594191353, -22.81534158036575], [116.18469594224433, -22.815351580249363], [116.18469648190406, -22.832018157786102], [116.18469600411069, -22.848684800187133], [116.18469645756566, -22.865351652978813], [116.18469691699626, -22.882018488332275], [116.18468691706387, -22.882028489288807], [116.16803025041419, -22.882028665378048], [116.16803091994888, -22.89868552060642], [116.16802092112047, -22.89869552152056], [116.1513641274758, -22.898695781100894], [116.15136474844331, -22.91535266168431], [116.15135474856014, -22.91536266161483], [116.13468808909958, -22.91536281119514], [116.1180215149452, -22.915362899666693], [116.10135474378576, -22.91536316524688]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M8378/4: Mount Clement gold/base metal exploration: (Annual Report) (1/1/1994-1/12/1994)  The Mount Clement project (E8/637 and E8/666) was 165 km southwest from the town of Paraburdoo on the Wyloo 1:250 000 map sheet. The project covered the western", "AUTHOR_COMPANY": "TAIPAN RESOURCES NL", "AUTHOR_NAME": null, "DATE_FROM": {"$date": "1994-01-01T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "2007-07-20T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1994-12-01T00:00:00.000Z"}, "DIGITAL_FILE": -1, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=46444", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=46444", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 15133, "KEYWORDS": "Geochemistry; Rock chip sampling; Geology; Geological mapping; Geophysics; Aerial magnetic surveys", "OPERATOR": "TAIPAN RESOURCES NL", "PROJECT": "Mount Clement", "REGION": "western_australia", "REPORT_NUMBER": "46444", "REPORT_TYPE": "Annual", "REPORT_YEAR": 1994, "TARGET_COMMODITY": "GOLD", "TITLE": "Annual report on 1994 Exploration Activities within E08/637 and E08/666 Mt. Clement Group Report Wyloo Area - Western Australia", "popup": "\u003cb\u003eWMC\u003c/b\u003e\u003cbr\u003eLocation: Mt Clement Prospect\u003cbr\u003eActivity: Drilling (Diamond Core)\u003cbr\u003eOutcome: Four holes drilled, none reached targets", "time": "1994-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_b09fe282d26bed891bd9b6c49dd0998f.bindTooltip(
+                `<div>
+                     WMC (1976) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_b09fe282d26bed891bd9b6c49dd0998f.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_f9c2acf6586bcd77c0954d88765a645d_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "orange", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_f9c2acf6586bcd77c0954d88765a645d_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "orange", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_f9c2acf6586bcd77c0954d88765a645d_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_f9c2acf6586bcd77c0954d88765a645d.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_f9c2acf6586bcd77c0954d88765a645d_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_f9c2acf6586bcd77c0954d88765a645d = L.geoJson(null, {
+                onEachFeature: geo_json_f9c2acf6586bcd77c0954d88765a645d_onEachFeature,
+            
+                style: geo_json_f9c2acf6586bcd77c0954d88765a645d_styler,
+        });
+
+        function geo_json_f9c2acf6586bcd77c0954d88765a645d_add (data) {
+            geo_json_f9c2acf6586bcd77c0954d88765a645d
+                .addData(data);
+        }
+            geo_json_f9c2acf6586bcd77c0954d88765a645d_add({"features": [{"_id": {"$oid": "661ccf8a0233c852e75ec6e2"}, "geometry": {"coordinates": [[[[119.50000986480704, -31.49998630743744], [119.75000989488807, -31.49998645060276], [119.75000937027096, -31.749986251116916], [119.50000934087646, -31.749986261198426], [119.50000986480704, -31.49998630743744]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M2340/16: Marvel Loch / Jaccoletti gold exploration: (Non-Statutory Report) (1/1/1987-?)  The Centenary prospect (P77/283, P77/284, P77/285, P77/286 and P77/397), part of the Burbidge / Marvel Loch / Meiers Find West Project, was 50 km south-southeas", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "NEEHOFF B", "DATE_FROM": {"$date": "1987-01-01T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "2006-04-06T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1987-12-31T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=22389", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=22389", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": 0, "ITEM_NO": 12247, "KEYWORDS": "Geochemistry; Grab sampling; Rock chip sampling; Drilling; RC drilling; Geology; Geological mapping; Geophysics; Ground magnetic surveys", "OPERATOR": "GREAT VICTORIA GOLD LTD", "PROJECT": "Centenary", "REGION": "western_australia", "REPORT_NUMBER": "22389", "REPORT_TYPE": "Non-statutory", "REPORT_YEAR": 1987, "TARGET_COMMODITY": "GOLD", "TITLE": "Progress report on the Centenary Tenements P77/283 P77/284 P77/285 P77/286 and P77/397 Yilgarn Goldfield (1987)", "popup": "\u003cb\u003eGreat Victoria Exploration\u003c/b\u003e\u003cbr\u003eLocation: Northern end of Centenary prospect\u003cbr\u003eActivity: Drilling (Reverse Circulation)\u003cbr\u003eOutcome: Drilling failed to intersect the target", "time": "1987-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_f9c2acf6586bcd77c0954d88765a645d.bindTooltip(
+                `<div>
+                     Great Victoria Exploration (1986) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_f9c2acf6586bcd77c0954d88765a645d.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_0b82a8f422d1dcec497c114488cbd5ce_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_0b82a8f422d1dcec497c114488cbd5ce_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_0b82a8f422d1dcec497c114488cbd5ce_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_0b82a8f422d1dcec497c114488cbd5ce.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_0b82a8f422d1dcec497c114488cbd5ce_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_0b82a8f422d1dcec497c114488cbd5ce = L.geoJson(null, {
+                onEachFeature: geo_json_0b82a8f422d1dcec497c114488cbd5ce_onEachFeature,
+            
+                style: geo_json_0b82a8f422d1dcec497c114488cbd5ce_styler,
+        });
+
+        function geo_json_0b82a8f422d1dcec497c114488cbd5ce_add (data) {
+            geo_json_0b82a8f422d1dcec497c114488cbd5ce
+                .addData(data);
+        }
+            geo_json_0b82a8f422d1dcec497c114488cbd5ce_add({"features": [{"_id": {"$oid": "661ccfa40233c852e75f1338"}, "geometry": {"coordinates": [[[[122.30888342539768, -29.87639903402026], [122.30887341141371, -29.876389049042924], [122.30887335242278, -29.87634993910906], [122.30885713993361, -29.86556452334344], [122.30883707427381, -29.86240657679368], [122.30884705926343, -29.862396513802103], [122.30886423824448, -29.86239648779336], [122.30886424824449, -29.862396447793436], [122.30887380723455, -29.862389332798095], [122.31246952627123, -29.8623837879712], [122.31696627803201, -29.862376699459013], [122.3169669300299, -29.862376720458247], [122.32522460262237, -29.86290299331281], [122.32523396658718, -29.862912951287967], [122.32526348756832, -29.87635596541275], [122.32525350459859, -29.876365987407052], [122.32524231663835, -29.87636600642022], [122.32524225463833, -29.876366431419545], [122.32523245766893, -29.87637450241704], [122.32433869884834, -29.876375869471705], [122.31697698803825, -29.87638712315912], [122.31697698703826, -29.87638712315912], [122.31246944050349, -29.87639380994825], [122.3124694395035, -29.87639380994825], [122.30888342539768, -29.87639903402026]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M7223/4: Wallbrook Hill gold exploration: (Annual Report) (1/8/1994-1/8/1995)  The Wallbrook Hill project, (P31/1406 and P31/1407) was 160 km northeast of the city of Kalgoorlie on the Edjudina 1:250 000 map sheet. The Wallbrook granitoid intrusion l", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "FOSTER M F", "DATE_FROM": {"$date": "1994-08-01T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "2007-12-21T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1995-08-01T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=45698", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=45698", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 14883, "KEYWORDS": "Geochemistry; Soil sampling; Literature review", "OPERATOR": "TALON RESOURCES NL", "PROJECT": "Wallbrook Hill", "REGION": "western_australia", "REPORT_NUMBER": "45698", "REPORT_TYPE": "Annual", "REPORT_YEAR": 1995, "TARGET_COMMODITY": "GOLD", "TITLE": "ANNUAL REPORT ON THE WALLBROOK HILL PROJECT, P31/1406 \u0026 1407 FOR THE YEAR ENDING 28/08/95", "popup": "\u003cb\u003eNormandy Poseidon\u003c/b\u003e\u003cbr\u003eLocation: Beneath Redbrook mineralisation\u003cbr\u003eActivity: Drilling (Reverse Circulation)\u003cbr\u003eOutcome: One deep hole drilled; failed to hit the target", "time": "1995-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_0b82a8f422d1dcec497c114488cbd5ce.bindTooltip(
+                `<div>
+                     Normandy Poseidon (1992-1995) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_0b82a8f422d1dcec497c114488cbd5ce.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_1726e1d03e7244b66e57f9a024ea43e4_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_1726e1d03e7244b66e57f9a024ea43e4_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_1726e1d03e7244b66e57f9a024ea43e4_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_1726e1d03e7244b66e57f9a024ea43e4.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_1726e1d03e7244b66e57f9a024ea43e4_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_1726e1d03e7244b66e57f9a024ea43e4 = L.geoJson(null, {
+                onEachFeature: geo_json_1726e1d03e7244b66e57f9a024ea43e4_onEachFeature,
+            
+                style: geo_json_1726e1d03e7244b66e57f9a024ea43e4_styler,
+        });
+
+        function geo_json_1726e1d03e7244b66e57f9a024ea43e4_add (data) {
+            geo_json_1726e1d03e7244b66e57f9a024ea43e4
+                .addData(data);
+        }
+            geo_json_1726e1d03e7244b66e57f9a024ea43e4_add({"features": [{"_id": {"$oid": "661ccfb00233c852e75f32af"}, "geometry": {"coordinates": [[[[116.11801357105541, -22.99868753756846], [116.1180132671348, -22.98202069086601], [116.11801291788004, -22.96535370676343], [116.11801262306398, -22.948696915765417], [116.10135602894132, -22.94869719185747], [116.08468934574587, -22.948697060237915], [116.06802261062738, -22.948697018735615], [116.05135587293643, -22.948696994352353], [116.03468945924301, -22.948697208135663], [116.01802306168591, -22.94869740898764], [116.00135664865304, -22.94869762752099], [116.00134664864221, -22.948687628595334], [116.00134621057144, -22.93203077959783], [115.9846896410723, -22.932030937363816], [115.96802309795129, -22.93203111919221], [115.95135652956019, -22.932031271369855], [115.93468992866575, -22.932031403574424], [115.91802332906882, -22.932031549224785], [115.90135675191424, -22.932031617452733], [115.8846900983634, -22.932031753812176], [115.88468009839154, -22.932021753922147], [115.88467963564229, -22.91535493668544], [115.8846896356699, -22.9153449366626], [115.90134632424086, -22.91534479162032], [115.90134587301411, -22.898697955230954], [115.88468916673708, -22.898698092603706], [115.88467916673257, -22.8986880926757], [115.88467870754786, -22.882031269625998], [115.86802200903514, -22.88203141261086], [115.86801200904333, -22.88202141265262], [115.86801155610706, -22.86536458126488], [115.85135488653651, -22.865364695377444], [115.85134488654582, -22.86535469638777], [115.85134440320962, -22.848697693513504], [115.834687721031, -22.848697809344493], [115.8346777209809, -22.84868780920332], [115.83467733888763, -22.83202091164072], [115.83467696173766, -22.815354070418064], [115.83467658525463, -22.798687228177933], [115.83468658523836, -22.79867722817862], [115.85134323817213, -22.798677093912506], [115.85134292433185, -22.782020266910916], [115.85134259701222, -22.7653534444147], [115.85134259701222, -22.76535344341471], [115.85134228863907, -22.748696606692825], [115.83468566107355, -22.748696754318996], [115.83467566107078, -22.748686754317358], [115.83467537150382, -22.732019921394134], [115.83467508050182, -22.715353103950193], [115.83467480439228, -22.69868627009577], [115.83467465319477, -22.682019460925282], [115.83467449538377, -22.66535256015423], [115.83467430949607, -22.648685697403646], [115.83468430948734, -22.648675697379648], [115.85135092548516, -22.64867556440461], [115.86801750482988, -22.64867542841104], [115.88468407737759, -22.64867526264155], [115.90135066758211, -22.6486751508444], [115.91801732898595, -22.648675040679546], [115.93468399509364, -22.648674939582936], [115.95135067098386, -22.648674833889604], [115.96801732931601, -22.64867470498556], [115.98468400371199, -22.648674574703445], [116.00135066296778, -22.648674445628313], [116.01801730051237, -22.648674293990243], [116.03468386353939, -22.6486741254763], [116.05135049106904, -22.64867396965097], [116.05136049106801, -22.648683969648943], [116.05136066029358, -22.665350768857028], [116.05136067911913, -22.68201751754764], [116.05136101865479, -22.698684360376237], [116.05136117540114, -22.715351170948164], [116.05136134674046, -22.732007963009057], [116.06801793954267, -22.73200805818609], [116.08468454698448, -22.732008138820998], [116.08469454696822, -22.73201813880763], [116.0846946499349, -22.748685172826786], [116.08469481850261, -22.765342030338378], [116.10135135484629, -22.765342272725245], [116.11801801906527, -22.76534177713903], [116.13468449941678, -22.765341248644287], [116.13469449926944, -22.765351248602943], [116.13469466717558, -22.782008146302175], [116.15135130775685, -22.7820076578207], [116.15136130772096, -22.782017657811313], [116.15136151826438, -22.798674560421254], [116.16801840085026, -22.79867461575044], [116.16802840150258, -22.798684615913015], [116.16802913785114, -22.815341567918914], [116.18468594191353, -22.81534158036575], [116.2013528471566, -22.81534152800965], [116.20136284690177, -22.815351527697434], [116.2013625114174, -22.83200800420482], [116.21801870533088, -22.83200796528398], [116.21802870522077, -22.832017965242986], [116.21802910774632, -22.848674386595242], [116.2346857498409, -22.848674170694462], [116.25135123797014, -22.848673754323112], [116.25136123687545, -22.848683754137618], [116.25136204858076, -22.865340581370617], [116.26801834377463, -22.865340880600584], [116.26802834358728, -22.865350879578298], [116.26802883380911, -22.882007481126927], [116.28468714018219, -22.88200793043198], [116.28469714025779, -22.88201792960505], [116.28469738641869, -22.898684351105203], [116.28469724151383, -22.91535154550694], [116.28469699689137, -22.93201867875211], [116.28469782760692, -22.9486858287413], [116.2846982271822, -22.965352750740607], [116.28469852327035, -22.982019687507037], [116.28469881231872, -22.99868663186554], [116.28468881234396, -22.998696632814987], [116.26802252426876, -22.998696831464084], [116.25135623238933, -22.998697019812106], [116.23468975926089, -22.998697101621183], [116.21802328250143, -22.99869717555327], [116.2013567837979, -22.998697272156967], [116.18469015191064, -22.998697249862623], [116.16802342853683, -22.998697295791096], [116.15135675611235, -22.998697383343575], [116.13469017450119, -22.998697460205417], [116.11802357206155, -22.99869753752388], [116.11801357105541, -22.99868753756846]], [[115.8846864642888, -22.798676888525], [115.90135312598598, -22.79867673650648], [115.91800969533858, -22.798676609691455], [115.91800937814607, -22.782019788818342], [115.9180193781628, -22.782009788838778], [115.9346759360097, -22.782009617075236], [115.93467560041313, -22.76535272085729], [115.93467530359538, -22.74869590287099], [115.91801875096924, -22.74869610207385], [115.901352168224, -22.748696249005565], [115.8846955385736, -22.74869639250313], [115.88469592157155, -22.765353304466874], [115.88468592163267, -22.765363304531437], [115.86802923852055, -22.76536332524538], [115.86802952867227, -22.782020133802714], [115.86802985157541, -22.798676974004543], [115.8846864642888, -22.798676888525]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M8378/3: Mount Clement gold/base metal exploration: (Annual Report) (1/11/1996-1/11/1997)  Work completed included geological mapping, rock chip sampling and RC drilling.The drilling intersected several zones of Pb-Sb mineralisation at the Eastern Hi", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "HALLIDAY H P", "DATE_FROM": {"$date": "1996-11-01T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "2006-05-15T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1997-11-01T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=53863", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=53863", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 13080, "KEYWORDS": "Geochemistry; Rock chip sampling; Drilling; RC drilling; Geology; Geological mapping", "OPERATOR": "TAIPAN RESOURCES NL", "PROJECT": "Mount Clement", "REGION": "western_australia", "REPORT_NUMBER": "53863", "REPORT_TYPE": "Annual", "REPORT_YEAR": 1997, "TARGET_COMMODITY": "BASE METALS; GOLD", "TITLE": "Mt Clement Project, Annual Report 15/11/1996 - 14/11/1997, E08/637, 666, 907-910.", "popup": "\u003cb\u003eWestern Mining Corporation Ltd\u003c/b\u003e\u003cbr\u003eLocation: Mt Clement Prospect\u003cbr\u003eActivity: Drilling (diamond core)\u003cbr\u003eOutcome: Four holes drilled, none reached targets; continuity lacking", "time": "1997-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_1726e1d03e7244b66e57f9a024ea43e4.bindTooltip(
+                `<div>
+                     Western Mining Corporation Ltd (1976) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_1726e1d03e7244b66e57f9a024ea43e4.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_c04720af65a41aebf3caa2e12db2fbc9_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_c04720af65a41aebf3caa2e12db2fbc9_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_c04720af65a41aebf3caa2e12db2fbc9_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_c04720af65a41aebf3caa2e12db2fbc9.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_c04720af65a41aebf3caa2e12db2fbc9_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_c04720af65a41aebf3caa2e12db2fbc9 = L.geoJson(null, {
+                onEachFeature: geo_json_c04720af65a41aebf3caa2e12db2fbc9_onEachFeature,
+            
+                style: geo_json_c04720af65a41aebf3caa2e12db2fbc9_styler,
+        });
+
+        function geo_json_c04720af65a41aebf3caa2e12db2fbc9_add (data) {
+            geo_json_c04720af65a41aebf3caa2e12db2fbc9
+                .addData(data);
+        }
+            geo_json_c04720af65a41aebf3caa2e12db2fbc9_add({"features": [{"_id": {"$oid": "661ccf880233c852e75ec1dd"}, "geometry": {"coordinates": [[[[118.13895266645648, -27.404252239091537], [118.13894308946779, -27.4042483571119], [118.13623445367107, -27.401727653282908], [118.13623445267108, -27.401727652282865], [118.13331343638905, -27.399009115262995], [118.13331388637162, -27.398987486267757], [118.13680289374275, -27.396000797598376], [118.13680289374275, -27.396000796598386], [118.14432328895153, -27.389563669790004], [118.1443425959555, -27.38956407076402], [118.14997207346079, -27.394802969451735], [118.14997162545056, -27.394824599436053], [118.14851227172963, -27.39607398908331], [118.14851227072965, -27.39607398908331], [118.14118014077323, -27.402350520958326], [118.14118014077323, -27.402350521958372], [118.13896239644362, -27.404248758074583], [118.13895266645648, -27.404252239091537]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M3929/0: Eelya Hill gold exploration: (Final Surrender Report) (1/1/1987-?)", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "GORDINE R S", "DATE_FROM": {"$date": "1983-04-26T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "2002-02-20T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1988-01-14T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=20692", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=20692", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 11676, "KEYWORDS": null, "OPERATOR": "SAMANTHA EXPLORATION NL", "PROJECT": "Eelya South", "REGION": "western_australia", "REPORT_NUMBER": "20692", "REPORT_TYPE": "Final Surrender", "REPORT_YEAR": 1987, "TARGET_COMMODITY": "GOLD", "TITLE": "Eelya Joint Venture, Eelya South Prospect, Final [surrender] report, P20/150-154, May 1987", "popup": "\u003cb\u003eFreeport of Australia Incorporated\u003c/b\u003e\u003cbr\u003eLocation: Eelya South, ES19\u201321 (M.I.P. anomalies)\u003cbr\u003eActivity: Drilling (RAB)\u003cbr\u003eOutcome: Holes failed to reach target depths; no results", "time": "1987-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_c04720af65a41aebf3caa2e12db2fbc9.bindTooltip(
+                `<div>
+                     Freeport of Australia Incorporated (1984) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_c04720af65a41aebf3caa2e12db2fbc9.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_3f248ebe98fa0c150fd93c0b9efd702b_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_3f248ebe98fa0c150fd93c0b9efd702b_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_3f248ebe98fa0c150fd93c0b9efd702b_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_3f248ebe98fa0c150fd93c0b9efd702b.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_3f248ebe98fa0c150fd93c0b9efd702b_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_3f248ebe98fa0c150fd93c0b9efd702b = L.geoJson(null, {
+                onEachFeature: geo_json_3f248ebe98fa0c150fd93c0b9efd702b_onEachFeature,
+            
+                style: geo_json_3f248ebe98fa0c150fd93c0b9efd702b_styler,
+        });
+
+        function geo_json_3f248ebe98fa0c150fd93c0b9efd702b_add (data) {
+            geo_json_3f248ebe98fa0c150fd93c0b9efd702b
+                .addData(data);
+        }
+            geo_json_3f248ebe98fa0c150fd93c0b9efd702b_add({"features": [{"_id": {"$oid": "661cd0060233c852e75ff35b"}, "geometry": {"coordinates": [[[[118.48334315106726, -24.733329495294686], [118.48333315105768, -24.733319495288768], [118.48333312623402, -24.71665281232521], [118.48333310209092, -24.699986131108478], [118.48333307890184, -24.683319466773998], [118.48333305693379, -24.666652786459817], [118.48334305691507, -24.66664278645272], [118.50000972003038, -24.666642783622155], [118.50137062035438, -24.666642783452485], [118.50137032981634, -24.648676365961837], [118.50137002589193, -24.63201957439323], [118.48471323050272, -24.63201971862549], [118.4847032305062, -24.63200971863069], [118.48470295192548, -24.616662782679878], [118.48334302465172, -24.616662784075093], [118.48333302465639, -24.616652784081612], [118.48333302360315, -24.615343010596067], [118.48333301312918, -24.59998610785301], [118.48333300424605, -24.58331943527003], [118.48333298842245, -24.566652773470068], [118.48334298838105, -24.56664277344008], [118.50000963770627, -24.566642752812232], [118.51667630558109, -24.56664275424558], [118.53334297915058, -24.566642754667246], [118.55000963772842, -24.566642744535603], [118.56667629744146, -24.566642734875273], [118.58334294122196, -24.56664272654258], [118.60000960209285, -24.566642719554565], [118.61667626507666, -24.56664271392289], [118.63334291219333, -24.5666427096518], [118.65000957646214, -24.566642706740215], [118.66667624190272, -24.566642705181845], [118.68334290953389, -24.566642704966217], [118.6999995592622, -24.56664270525276], [118.69999955073305, -24.549986030848153], [118.70000955072818, -24.549976030847873], [118.71667622123083, -24.549976033760768], [118.73334289537587, -24.54997603885752], [118.7499995558812, -24.549976045261655], [118.74999954602966, -24.533319369414947], [118.75000954602748, -24.53330936941736], [118.7666762223204, -24.533309376357938], [118.78334288774111, -24.533309378288987], [118.80000955659993, -24.53330938251385], [118.81667621098102, -24.53330937355589], [118.81668621101615, -24.533319373565096], [118.81668624406814, -24.549986062360045], [118.81667624407945, -24.54999606237469], [118.80000959006725, -24.54999607179521], [118.78334291079679, -24.54999606180047], [118.76668623272299, -24.549996052942937], [118.76668624567138, -24.56665273107087], [118.76667624567528, -24.566662731070142], [118.75000956836783, -24.566662722722327], [118.7333429073292, -24.566662715597598], [118.71668623261638, -24.56666270976073], [118.71668624650874, -24.583319372351305], [118.71667624651498, -24.58332937235233], [118.70000957260154, -24.58332936712429], [118.68334291717669, -24.58332936386007], [118.67248435780864, -24.583329363593826], [118.67248427680873, -24.583329379593827], [118.66667624945299, -24.583329363686143], [118.65138045347632, -24.583329364655594], [118.65138037247631, -24.583329380655606], [118.65001958398922, -24.583329364818322], [118.65001959091741, -24.598674869901192], [118.65001959150953, -24.599986040260685], [118.65000959148378, -24.59999604024888], [118.6333429270557, -24.599996042276977], [118.61804709215113, -24.599996034162217], [118.61804701115094, -24.5999960501621], [118.61668625114444, -24.599996032305352], [118.61668623766722, -24.615331844389146], [118.6180472658936, -24.61533183302028], [118.63471407325514, -24.61533170135133], [118.65138088222128, -24.615331570286934], [118.66804774672678, -24.615331467437027], [118.6847145714605, -24.61533134574081], [118.70138139014156, -24.615331223000876], [118.71804821013751, -24.61533108459462], [118.71805821015253, -24.615341084607895], [118.71805851951324, -24.63200789937741], [118.71805882264115, -24.648674722972288], [118.71805910458018, -24.665341507601912], [118.71805940018643, -24.6820083147739], [118.71804940118531, -24.68201831477164], [118.70138259410857, -24.682018449472473], [118.68471579090185, -24.682018524515716], [118.66804896887001, -24.68201861810021], [118.66668629644693, -24.68201869664444], [118.66668629737853, -24.683319403831277], [118.6666863096839, -24.699986070598094], [118.66668632370514, -24.716652752650607], [118.66668633973329, -24.73331944372212], [118.6666763397446, -24.733329443770558], [118.65000967312639, -24.73332948482731], [118.63334301165952, -24.73332948230779], [118.61667636773825, -24.733329480025994], [118.60000970827643, -24.733329478022558], [118.58334305117238, -24.73332947634448], [118.56667641131375, -24.73332947504562], [118.55000976869081, -24.73332950160023], [118.53334310109105, -24.733329491568803], [118.51667646300456, -24.7333294966522], [118.50000981486095, -24.733329495039015], [118.48334315106726, -24.733329495294686]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": null, "AUTHOR_COMPANY": null, "AUTHOR_NAME": "HARDY L", "DATE_FROM": {"$date": "2014-02-01T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "2021-05-04T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "2015-01-31T00:00:00.000Z"}, "DIGITAL_FILE": -1, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=105502", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=105502", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 0, "KEYWORDS": "Sub-Audio Magnetic; Surface geochemistry; Rock chip sampling; Geophysics; Aerial geophysical surveys; Aerial EM surveys; Geological mapping; Regolith mapping; Relogging; Resampling; Audiomagnetotelluric surveys; Heritage survey", "OPERATOR": "ABRA MINING PTY LIMITED", "PROJECT": "Mulgul", "REGION": "western_australia", "REPORT_NUMBER": "105502", "REPORT_TYPE": "Annual", "REPORT_YEAR": 2015, "TARGET_COMMODITY": "BASE METALS; GOLD; SILVER", "TITLE": "Annual Report for the Mulgul Project C28/2009 for the period 01/02/2014 - 31/01/2015, E52/02185, E52/01887, M52/00776, E52/01455", "popup": "\u003cb\u003eGeopeko Limited / Amoco\u003c/b\u003e\u003cbr\u003eLocation: Abra magnetic anomaly\u003cbr\u003eActivity: Drilling (Diamond)\u003cbr\u003eOutcome: Unsuccessful drill hole", "time": "2015-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_3f248ebe98fa0c150fd93c0b9efd702b.bindTooltip(
+                `<div>
+                     Geopeko Limited / Amoco (1980) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_3f248ebe98fa0c150fd93c0b9efd702b.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_b2abe5df8e22d62ca7cc3697d1a85283_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_b2abe5df8e22d62ca7cc3697d1a85283_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_b2abe5df8e22d62ca7cc3697d1a85283_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_b2abe5df8e22d62ca7cc3697d1a85283.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_b2abe5df8e22d62ca7cc3697d1a85283_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_b2abe5df8e22d62ca7cc3697d1a85283 = L.geoJson(null, {
+                onEachFeature: geo_json_b2abe5df8e22d62ca7cc3697d1a85283_onEachFeature,
+            
+                style: geo_json_b2abe5df8e22d62ca7cc3697d1a85283_styler,
+        });
+
+        function geo_json_b2abe5df8e22d62ca7cc3697d1a85283_add (data) {
+            geo_json_b2abe5df8e22d62ca7cc3697d1a85283
+                .addData(data);
+        }
+            geo_json_b2abe5df8e22d62ca7cc3697d1a85283_add({"features": [{"_id": {"$oid": "661ccf890233c852e75ec352"}, "geometry": {"coordinates": [[[[119.76435509155226, -21.307078053381808], [119.76435270755373, -21.30707778038087], [119.76158794810576, -21.306418040130787], [119.76158062010414, -21.306405691124105], [119.76163884894777, -21.30619144407861], [119.75699396026143, -21.30634345837581], [119.75698364026371, -21.306333836368903], [119.75691637339494, -21.304528591776076], [119.75692594638295, -21.304518228776423], [119.76216068055243, -21.304298023678893], [119.76216342155062, -21.304298287680002], [119.76492803495903, -21.304957769929267], [119.76493536496085, -21.3049701189359], [119.76436467854153, -21.307070675383134], [119.76435509155226, -21.307078053381808]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M3776/3: Fieldings Gully gold exploration: (Annual Report) (1/1/1987-?)  Fieldings Gully gold project (GML45/1334 and P45/1172) was 20 km south of the town of Marble Bar on the Marble Bar 1:250 000 map sheet. The area is underlain by ultrabasic to ba", "AUTHOR_COMPANY": "RANDOLPH RESOURCES LTD", "AUTHOR_NAME": null, "DATE_FROM": {"$date": "1987-01-01T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "2007-07-12T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1987-12-31T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=21170", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=21170", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 14369, "KEYWORDS": "Geochemistry; Bulk sampling; Rock chip sampling; Drilling; Geology; Geological mapping", "OPERATOR": "RANDOLPH HOLDINGS PTY LTD", "PROJECT": "Fieldings Gully", "REGION": "western_australia", "REPORT_NUMBER": "21170", "REPORT_TYPE": "Annual", "REPORT_YEAR": 1987, "TARGET_COMMODITY": "GOLD", "TITLE": "Annual report on PL45/1172 Pilbara Mineral Field Western Australia to 19/06/87 (Fieldings Gully Project)", "popup": "\u003cb\u003eRandolph Holdings Pty. Ltd\u003c/b\u003e\u003cbr\u003eLocation: Line 9,960E western extension\u003cbr\u003eActivity: Drilling (Percussion)\u003cbr\u003eOutcome: Only 8% of planned 1,300\u00a0m drilled; holes did not penetrate target", "time": "1987-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_b2abe5df8e22d62ca7cc3697d1a85283.bindTooltip(
+                `<div>
+                     Randolph Holdings Pty. Ltd (05/1987) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_b2abe5df8e22d62ca7cc3697d1a85283.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_0fc6396869544c7606436b0bc59419fa_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_0fc6396869544c7606436b0bc59419fa_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_0fc6396869544c7606436b0bc59419fa_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_0fc6396869544c7606436b0bc59419fa.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_0fc6396869544c7606436b0bc59419fa_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_0fc6396869544c7606436b0bc59419fa = L.geoJson(null, {
+                onEachFeature: geo_json_0fc6396869544c7606436b0bc59419fa_onEachFeature,
+            
+                style: geo_json_0fc6396869544c7606436b0bc59419fa_styler,
+        });
+
+        function geo_json_0fc6396869544c7606436b0bc59419fa_add (data) {
+            geo_json_0fc6396869544c7606436b0bc59419fa
+                .addData(data);
+        }
+            geo_json_0fc6396869544c7606436b0bc59419fa_add({"features": [{"_id": {"$oid": "661ccf8d0233c852e75ed428"}, "geometry": {"coordinates": [[[[121.75000989370045, -30.749986463874134], [122.0000099427508, -30.749986581650568], [122.00001028264768, -30.999986513842696], [121.75000996226488, -30.999986654216805], [121.75000989370045, -30.749986463874134]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M4406/3: Glandore gold exploration: (Annual Report) (1/1/1989-?)  The Glandore Project, (P25/624, P25/615) was 45 km east of the city of Kalgoorlie on the Kurnalpi 1:250,000 map sheet. Geology consisted of ultramafic and felsic rocks of the Morelands", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "WOOD B L", "DATE_FROM": {"$date": "1989-01-01T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "2006-04-11T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1989-01-01T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=27020", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=27020", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": 0, "ITEM_NO": 12553, "KEYWORDS": "Geology; Geological interpretation; Geophysics; Ground magnetic surveys", "OPERATOR": "MELBOURNE EXPLORATION NL", "PROJECT": "M4406/3: Glandore gold exploration", "REGION": "western_australia", "REPORT_NUMBER": "27020", "REPORT_TYPE": "Annual", "REPORT_YEAR": 1989, "TARGET_COMMODITY": "GOLD", "TITLE": "Glandore - East Coolgardie Mineral Field 06/12/87 - 05/12/88 Annual Report for Prospecting licence 25/624", "popup": "\u003cb\u003eMelbourne Exploration NL\u003c/b\u003e\u003cbr\u003eLocation: PL 25/624\u003cbr\u003eActivity: Drilling (RCP)\u003cbr\u003eOutcome: No drill targets defined", "time": "1989-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_0fc6396869544c7606436b0bc59419fa.bindTooltip(
+                `<div>
+                     Melbourne Exploration NL (06/1987–05/1988) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_0fc6396869544c7606436b0bc59419fa.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_89402de6493ac18624c9b8dccfce30e9_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "red", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_89402de6493ac18624c9b8dccfce30e9_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "red", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_89402de6493ac18624c9b8dccfce30e9_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_89402de6493ac18624c9b8dccfce30e9.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_89402de6493ac18624c9b8dccfce30e9_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_89402de6493ac18624c9b8dccfce30e9 = L.geoJson(null, {
+                onEachFeature: geo_json_89402de6493ac18624c9b8dccfce30e9_onEachFeature,
+            
+                style: geo_json_89402de6493ac18624c9b8dccfce30e9_styler,
+        });
+
+        function geo_json_89402de6493ac18624c9b8dccfce30e9_add (data) {
+            geo_json_89402de6493ac18624c9b8dccfce30e9
+                .addData(data);
+        }
+            geo_json_89402de6493ac18624c9b8dccfce30e9_add({"features": [{"_id": {"$oid": "661cd0120233c852e7600beb"}, "geometry": {"coordinates": [[[[120.70001033635826, -33.71666739465261], [120.69999633636426, -33.716653394653775], [120.69999633895596, -33.69998672589539], [120.69999634653477, -33.683320056992564], [120.69999635482833, -33.66665339182297], [120.69999636202532, -33.64998672530957], [120.70001036202943, -33.64997272530704], [120.71666302175188, -33.64997272228885], [120.71666302291021, -33.633320052972394], [120.71666301450963, -33.616653386638724], [120.71666300368666, -33.59998671926009], [120.71666296172937, -33.58332006848104], [120.71666294611506, -33.5666534025006], [120.7166629323776, -33.54998673338475], [120.71666294174115, -33.53332005757911], [120.7166629632466, -33.5166533852544], [120.71666297292326, -33.50000072305013], [120.70001031537869, -33.50000072389464], [120.69999631539878, -33.499986723901245], [120.69999631827854, -33.48333406357718], [120.68334365230622, -33.483334064113045], [120.68332965230074, -33.48332006411937], [120.68332963739087, -33.46666740087568], [120.66667697109337, -33.46666740032723], [120.66666297108327, -33.46665340032682], [120.66666297088575, -33.449986738702854], [120.66667697088633, -33.4499727387077], [120.68334363671325, -33.449972740006615], [120.70001030334572, -33.44997273985829], [120.7166769697569, -33.44997273844215], [120.7166909697556, -33.44998673843614], [120.71669096957157, -33.466639399509106], [120.73334363143518, -33.46663940192948], [120.7500102917743, -33.4666394058251], [120.76667695147167, -33.46663940903189], [120.76669095146327, -33.466653409029874], [120.76669094908897, -33.483320069548824], [120.7666769490939, -33.48333406954098], [120.75002428992826, -33.48333406632938], [120.75002428930377, -33.499986728018044], [120.7500242810107, -33.516639395696544], [120.76667695442202, -33.5166393940586], [120.78334361754678, -33.516639395383216], [120.8000102775139, -33.51663939705037], [120.80002427751874, -33.516653397044735], [120.80002427732026, -33.53332006623578], [120.8000242822938, -33.54997273327899], [120.81667694998048, -33.54997273094293], [120.81669094998007, -33.5499867309434], [120.81669095767538, -33.56665339733809], [120.81669096406405, -33.58330605427787], [120.8333436302992, -33.58330605524744], [120.83335763030483, -33.583320055244016], [120.83335763715417, -33.59998672719101], [120.8333576453367, -33.61665340194112], [120.83335765837447, -33.633320076171294], [120.83335767596148, -33.649986753964356], [120.83334367597803, -33.65000075396778], [120.81669101164323, -33.65000074698097], [120.81669101579661, -33.66665342214599], [120.81667701577699, -33.66666742214294], [120.80001036104694, -33.66666741503543], [120.7999963610485, -33.666653415011346], [120.79999634623694, -33.65000073764473], [120.7833436830169, -33.65000073269582], [120.78332968299412, -33.64998673269121], [120.78332965820145, -33.633320064821525], [120.7833296382815, -33.61665339876728], [120.78332962007237, -33.59998673952845], [120.78332963308726, -33.583320060098025], [120.78332962329134, -33.56665339628477], [120.78332960229248, -33.549986741212486], [120.78332961269508, -33.53333406588739], [120.76667694510583, -33.53333406538736], [120.75002426801065, -33.53333406657422], [120.75002425791317, -33.549986739727835], [120.75002427118925, -33.56665340640923], [120.75002427461719, -33.583320076371486], [120.75002428532447, -33.59998674286047], [120.75001028534264, -33.600000742853005], [120.73335763741609, -33.600000731302515], [120.73335765266248, -33.61665339307718], [120.73335766822107, -33.63332005227023], [120.73335767214337, -33.64998672295175], [120.73335767547434, -33.666653388897174], [120.73335767178509, -33.68332005479449], [120.73335766592211, -33.699986722183986], [120.73335765275657, -33.71665339391599], [120.73334365275794, -33.71666739391374], [120.71667699834745, -33.71666739157505], [120.70001033635826, -33.71666739465261]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": null, "AUTHOR_COMPANY": null, "AUTHOR_NAME": "FORTI L", "DATE_FROM": {"$date": "2016-05-20T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "2017-08-31T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "2017-05-19T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=114093", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=114093", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 0, "KEYWORDS": "Geological reconnaissance; Land access; Data review", "OPERATOR": "SOUTHERN GRAPHITE PTY LTD", "PROJECT": "West Munglinup", "REGION": "western_australia", "REPORT_NUMBER": "114093", "REPORT_TYPE": "Final Surrender", "REPORT_YEAR": 2017, "TARGET_COMMODITY": "GOLD; GRAPHITE; LITHIUM; NICKEL", "TITLE": "WEST MUNGLINUP E74/00556 Final Surrender Report for the period 20/05/2016 - 19/05/2017", "popup": "\u003cb\u003eSouthern Graphite Pty Ltd\u003c/b\u003e\u003cbr\u003eLocation: E74/556 Tenement, West Munglinup\u003cbr\u003eActivity: Other (Drilling Recommendation)\u003cbr\u003eOutcome: Drilling recommended over targets; no drilling executed due to access", "time": "2017-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_89402de6493ac18624c9b8dccfce30e9.bindTooltip(
+                `<div>
+                     Southern Graphite Pty Ltd (22 June 2017) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_89402de6493ac18624c9b8dccfce30e9.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_6f179b5bc81ffe22a465d9bac30a64ab_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_6f179b5bc81ffe22a465d9bac30a64ab_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_6f179b5bc81ffe22a465d9bac30a64ab_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_6f179b5bc81ffe22a465d9bac30a64ab.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_6f179b5bc81ffe22a465d9bac30a64ab_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_6f179b5bc81ffe22a465d9bac30a64ab = L.geoJson(null, {
+                onEachFeature: geo_json_6f179b5bc81ffe22a465d9bac30a64ab_onEachFeature,
+            
+                style: geo_json_6f179b5bc81ffe22a465d9bac30a64ab_styler,
+        });
+
+        function geo_json_6f179b5bc81ffe22a465d9bac30a64ab_add (data) {
+            geo_json_6f179b5bc81ffe22a465d9bac30a64ab
+                .addData(data);
+        }
+            geo_json_6f179b5bc81ffe22a465d9bac30a64ab_add({"features": [{"_id": {"$oid": "661ccf7d0233c852e75ea007"}, "geometry": {"coordinates": [[[[121.07408467639166, -28.30338211154766], [121.06885347774481, -28.290663484858136], [121.06885965969265, -28.290650162953778], [121.07652289164298, -28.28818133912301], [121.0765355295612, -28.2881879601615], [121.0804933489548, -28.30126159965251], [121.08048691807932, -28.30127399048495], [121.07409706535793, -28.303387801547736], [121.07409336937755, -28.303388292530244], [121.07408467639166, -28.30338211154766]]], [[[121.00439490725478, -28.23941437773931], [121.00440109013198, -28.239401057781905], [121.0120637904991, -28.23693214776302], [121.01207610651728, -28.236937864797248], [121.01730370300443, -28.24965663181458], [121.01729752005306, -28.249669951751276], [121.00963493378867, -28.252138850616394], [121.00963125279634, -28.252139313603585], [121.00962261779404, -28.25213313359508], [121.00439490725478, -28.23941437773931]]], [[[120.99464753581442, -28.213308398475938], [120.98984988984711, -28.20045798073332], [120.98985644772111, -28.200444886902567], [120.99758540059904, -28.198181267849854], [120.99512765732266, -28.191581685288913], [120.99041142242336, -28.17893337945531], [120.99041772340958, -28.178920368453095], [120.99355498387555, -28.1779085467069], [120.99355495865674, -28.16559073231905], [120.9935549173227, -28.152055525562268], [120.99355489289991, -28.138520291119754], [120.99355496878529, -28.124995029795567], [120.9874742727579, -28.12499499540916], [120.98746427270835, -28.12498499541939], [120.98746432907427, -28.115059106320658], [120.98746432907429, -28.115059102320636], [120.98746947997034, -28.101533774032852], [120.97933860235003, -28.101533780021153], [120.97932860236888, -28.101523780005557], [120.97932967966499, -28.087998409704596], [120.97119981716367, -28.087998406566154], [120.97118981720563, -28.08798840554361], [120.97119090421305, -28.074463018009755], [120.9630620463412, -28.074463017738086], [120.96305204636656, -28.074453016724704], [120.96305312299957, -28.060917601421785], [120.9630531316706, -28.05099162758888], [120.96305318985482, -28.037456159561806], [120.9630532513773, -28.023920656783666], [120.9630533103684, -28.01038513782371], [120.96306331043517, -28.01037513779821], [120.97120114927579, -28.010375133073907], [120.97933999959588, -28.010375128496438], [120.9874640648596, -28.01037512047978], [120.9874770075558, -28.006775618999722], [120.98748700761077, -28.006765654972114], [120.99562077681703, -28.00676564711666], [121.00375452192212, -28.006765639585662], [121.01188826210846, -28.006765634180265], [121.01189533207169, -28.006768563190093], [121.01189539407096, -28.006768656190353], [121.01189545607143, -28.006768563190118], [121.01190252807245, -28.0067656341832], [121.02004338052592, -28.00676563585933], [121.02819445487205, -28.006765636560292], [121.02820445482587, -28.006775636578546], [121.02820440562283, -28.020311155573264], [121.02820435707095, -28.03384665814854], [121.02819435704077, -28.033856658165803], [121.02819005904318, -28.03385665816541], [121.02819001189853, -28.047382126063393], [121.0281899667325, -28.060907576087796], [121.0281942647301, -28.060907576089836], [121.0363320651511, -28.06090757995], [121.0444698857612, -28.06090757876124], [121.05259770982215, -28.060907573415463], [121.05259775243803, -28.047382121205946], [121.05259779584945, -28.03384665166625], [121.05260779588043, -28.033836651641323], [121.06074762192354, -28.033836658325335], [121.06888745644434, -28.033836669857923], [121.06889745637638, -28.03384666989449], [121.06889740653806, -28.047382145129067], [121.06889735532569, -28.060917604014733], [121.06889724396825, -28.074453029975984], [121.068897158849, -28.087988422177993], [121.06889717880149, -28.10152377287706], [121.06888717893172, -28.10153377283015], [121.0607473674114, -28.101533748152416], [121.0526065220409, -28.101533732865686], [121.04447562790344, -28.10153373999783], [121.04447556145452, -28.115049071940394], [121.05566072487035, -28.11504905813071], [121.06685580539808, -28.115049075333992], [121.06686580530727, -28.115059075353795], [121.06686573074127, -28.124977627721496], [121.06685573372644, -28.1249876277014], [121.0563843691779, -28.124990306236047], [121.05566067790389, -28.12499051382195], [121.05566067690391, -28.124990513821945], [121.05260746078407, -28.124991336611178], [121.0482417016487, -28.12499242281252], [121.044465540873, -28.124993458774576], [121.04009904271473, -28.124994527984885], [121.04009904071475, -28.124994527984892], [121.03632462835861, -28.124995006234712], [121.03632462735861, -28.124995006234716], [121.03429939444023, -28.12499498086251], [121.0342993541695, -28.13852028880123], [121.03429940954766, -28.15205549863163], [121.03429950924499, -28.16559068837663], [121.03429951131834, -28.165848776809653], [121.03429232338895, -28.16585837379195], [121.03181584580183, -28.166584173388635], [121.03173820855355, -28.175153458403383], [121.03171749762213, -28.177439987418257], [121.0316864392244, -28.180871202940835], [121.03159479101282, -28.190992803311246], [121.031594791167, -28.195154261676116], [121.03158760313373, -28.195163858694098], [121.0308777406832, -28.195371855786977], [121.03086555971154, -28.195365756767305], [121.0260721309749, -28.182523821640498], [121.01834601324484, -28.184787847428463], [121.0106107914184, -28.187054471834823], [121.00288571910853, -28.18931810544851], [121.00534712185957, -28.195917052158542], [121.00767589337782, -28.20215862808476], [121.00766933545256, -28.202171719983664], [120.99994160772482, -28.204435784392647], [121.0024054055369, -28.211034806956054], [121.0024054055369, -28.21103480795603], [121.00720239278914, -28.2238853112145], [121.01199997798115, -28.236735841969043], [121.01199342110945, -28.236748935913713], [121.00425450519955, -28.239015520467476], [121.0042507982097, -28.239015883460414], [121.00424232517213, -28.239009420461876], [120.99944563582528, -28.22615891352604], [120.99464753581442, -28.213308398475938]], [[121.00171865958426, -28.17538315519744], [121.00172612259165, -28.175380968188637], [121.00171864451119, -28.168167005815956], [121.00171865958426, -28.17538315519744]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M2225/0: Otto Well copper-zinc exploration: (Annual Report)", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "FITTON M J", "DATE_FROM": {"$date": "1977-01-01T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "1980-10-16T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1977-01-01T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=7588", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=7588", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 3046, "KEYWORDS": "Geochemistry; Gossan sampling; Ironstone sampling; Rock chip sampling; Drilling; Rotary drilling; Geology; Aerial colour photography; Geological mapping; Petrology; Geophysics; Aerial magnetic surveys", "OPERATOR": "ESSO EXPLORATION AUST INC", "PROJECT": "Otto Well", "REGION": "western_australia", "REPORT_NUMBER": "7588", "REPORT_TYPE": "Annual", "REPORT_YEAR": 1978, "TARGET_COMMODITY": "COPPER; ZINC", "TITLE": "Otto Well Project, Annual Report for the period 31/12/1977, MC36/3889, 3892-3893, 3895, 3899-3905, 3911-3985, 3911-3985, 4095-4126: MC37/5779 \u0026 5837.", "popup": "\u003cb\u003eEsso Exploration and Production Australia Inc.\u003c/b\u003e\u003cbr\u003eLocation: Lehmans Well (Goanna Patch)\u003cbr\u003eActivity: Drilling (Percussion)\u003cbr\u003eOutcome: Poor drill results; target dropped", "time": "1978-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_6f179b5bc81ffe22a465d9bac30a64ab.bindTooltip(
+                `<div>
+                     Esso Exploration and Production Australia Inc. (Early 1976) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_6f179b5bc81ffe22a465d9bac30a64ab.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_56113987cbdca1d7c19fc1ced4289a84_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_56113987cbdca1d7c19fc1ced4289a84_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_56113987cbdca1d7c19fc1ced4289a84_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_56113987cbdca1d7c19fc1ced4289a84.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_56113987cbdca1d7c19fc1ced4289a84_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_56113987cbdca1d7c19fc1ced4289a84 = L.geoJson(null, {
+                onEachFeature: geo_json_56113987cbdca1d7c19fc1ced4289a84_onEachFeature,
+            
+                style: geo_json_56113987cbdca1d7c19fc1ced4289a84_styler,
+        });
+
+        function geo_json_56113987cbdca1d7c19fc1ced4289a84_add (data) {
+            geo_json_56113987cbdca1d7c19fc1ced4289a84
+                .addData(data);
+        }
+            geo_json_56113987cbdca1d7c19fc1ced4289a84_add({"features": [{"_id": {"$oid": "661ccfa00233c852e75f0b4b"}, "geometry": {"coordinates": [[[[128.93470873598594, -15.79932314447137], [128.8011928227399, -15.798350095127455], [128.80112878211673, -15.765178061937084], [128.81739479226712, -15.765244027125593], [128.81716376917336, -15.71157000641952], [128.81731376868026, -15.71129700599093], [128.90061469240803, -15.711382999951953], [128.9003986991461, -15.73219801152862], [128.9348906833489, -15.732204055138185], [128.93470873598594, -15.79932314447137]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M8364/2: Mount Cecil diamond exploration: (Final Surrender Report) (1/1/1994-?)", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "SACKERS D M", "DATE_FROM": {"$date": "1993-02-24T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "1995-03-17T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1995-02-27T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=43620", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=43620", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": 0, "ITEM_NO": 8048, "KEYWORDS": "Geochemistry; Electron microprobes; Stream sediment sampling; Indicator minerals", "OPERATOR": "LIVRE HOLDINGS PTY LTD", "PROJECT": "Mount Cecil", "REGION": "western_australia", "REPORT_NUMBER": "43620", "REPORT_TYPE": "Final Surrender", "REPORT_YEAR": 1995, "TARGET_COMMODITY": "DIAMOND", "TITLE": "Mount Cecil Project. Second and final report, 02/95. E80/1505.", "popup": "\u003cb\u003eCRA Exploration Pty Limited\u003c/b\u003e\u003cbr\u003eLocation: Four EM/magnetic anomalies in licence area\u003cbr\u003eActivity: Drilling (Auger drilling)\u003cbr\u003eOutcome: All holes failed to reach target (avg depth 4\u00a0m)", "time": "1995-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_56113987cbdca1d7c19fc1ced4289a84.bindTooltip(
+                `<div>
+                     CRA Exploration Pty Ltd (1982) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_56113987cbdca1d7c19fc1ced4289a84.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_83c31ab6f79eeb2b16a8065a2bfbec34_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_83c31ab6f79eeb2b16a8065a2bfbec34_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_83c31ab6f79eeb2b16a8065a2bfbec34_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_83c31ab6f79eeb2b16a8065a2bfbec34.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_83c31ab6f79eeb2b16a8065a2bfbec34_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_83c31ab6f79eeb2b16a8065a2bfbec34 = L.geoJson(null, {
+                onEachFeature: geo_json_83c31ab6f79eeb2b16a8065a2bfbec34_onEachFeature,
+            
+                style: geo_json_83c31ab6f79eeb2b16a8065a2bfbec34_styler,
+        });
+
+        function geo_json_83c31ab6f79eeb2b16a8065a2bfbec34_add (data) {
+            geo_json_83c31ab6f79eeb2b16a8065a2bfbec34
+                .addData(data);
+        }
+            geo_json_83c31ab6f79eeb2b16a8065a2bfbec34_add({"features": [{"_id": {"$oid": "661ccfa00233c852e75f0b4b"}, "geometry": {"coordinates": [[[[128.93470873598594, -15.79932314447137], [128.8011928227399, -15.798350095127455], [128.80112878211673, -15.765178061937084], [128.81739479226712, -15.765244027125593], [128.81716376917336, -15.71157000641952], [128.81731376868026, -15.71129700599093], [128.90061469240803, -15.711382999951953], [128.9003986991461, -15.73219801152862], [128.9348906833489, -15.732204055138185], [128.93470873598594, -15.79932314447137]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M8364/2: Mount Cecil diamond exploration: (Final Surrender Report) (1/1/1994-?)", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "SACKERS D M", "DATE_FROM": {"$date": "1993-02-24T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "1995-03-17T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1995-02-27T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=43620", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=43620", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": 0, "ITEM_NO": 8048, "KEYWORDS": "Geochemistry; Electron microprobes; Stream sediment sampling; Indicator minerals", "OPERATOR": "LIVRE HOLDINGS PTY LTD", "PROJECT": "Mount Cecil", "REGION": "western_australia", "REPORT_NUMBER": "43620", "REPORT_TYPE": "Final Surrender", "REPORT_YEAR": 1995, "TARGET_COMMODITY": "DIAMOND", "TITLE": "Mount Cecil Project. Second and final report, 02/95. E80/1505.", "popup": "\u003cb\u003eCRA Exploration Pty Limited\u003c/b\u003e\u003cbr\u003eLocation: Four EM/magnetic anomalies in licence area\u003cbr\u003eActivity: Drilling (Auger drilling)\u003cbr\u003eOutcome: All holes failed to reach target (avg depth 4\u00a0m)", "time": "1995-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_83c31ab6f79eeb2b16a8065a2bfbec34.bindTooltip(
+                `<div>
+                     CRA Exploration Pty Limited (1982) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_83c31ab6f79eeb2b16a8065a2bfbec34.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_eefda12a6fcdcac1b5986ed640a38de0_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "orange", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_eefda12a6fcdcac1b5986ed640a38de0_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "orange", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_eefda12a6fcdcac1b5986ed640a38de0_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_eefda12a6fcdcac1b5986ed640a38de0.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_eefda12a6fcdcac1b5986ed640a38de0_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_eefda12a6fcdcac1b5986ed640a38de0 = L.geoJson(null, {
+                onEachFeature: geo_json_eefda12a6fcdcac1b5986ed640a38de0_onEachFeature,
+            
+                style: geo_json_eefda12a6fcdcac1b5986ed640a38de0_styler,
+        });
+
+        function geo_json_eefda12a6fcdcac1b5986ed640a38de0_add (data) {
+            geo_json_eefda12a6fcdcac1b5986ed640a38de0
+                .addData(data);
+        }
+            geo_json_eefda12a6fcdcac1b5986ed640a38de0_add({"features": [{"_id": {"$oid": "661ccf8d0233c852e75ed4a1"}, "geometry": {"coordinates": [[[[117.87002644921519, -28.06038857233074], [117.86931358518976, -28.046193816447776], [117.8689138318946, -28.03823188716795], [117.86892428985905, -28.038221397160658], [117.87392843691872, -28.038457445472638], [117.8739288889182, -28.03845747747276], [117.88467748907863, -28.03945442961794], [117.88539496900246, -28.03952093860868], [117.88540400806755, -28.039530030596932], [117.88558434890135, -28.041606215580785], [117.88720810930943, -28.060297446591676], [117.88719819929929, -28.06030831265074], [117.87003648925082, -28.06039807036203], [117.87002644921519, -28.06038857233074]]], [[[117.80914615687855, -28.050650696199046], [117.80914589287877, -28.0506506331989], [117.80914584987882, -28.05065063219889], [117.80914584887883, -28.050650632198888], [117.80914582687885, -28.05065063119889], [117.80913804189204, -28.050644813194207], [117.80913493290305, -28.050637881191427], [117.80881976488206, -28.04993867989455], [117.80882046186927, -28.04992917389066], [117.80905787421523, -28.049558723825168], [117.8100893243707, -28.047949241418422], [117.81012785326432, -28.04788910539937], [117.81013057625873, -28.047886280398735], [117.81013063225862, -28.047886247398743], [117.81013099425802, -28.047885959398684], [117.8101321222563, -28.047885282398685], [117.81172890001174, -28.047065357398964], [117.81173876200494, -28.04706576940189], [117.81370504414576, -28.048292887834606], [117.81370648116528, -28.048308766846787], [117.81370646516537, -28.04830877984677], [117.81370638416549, -28.048308863846824], [117.81370422416913, -28.048310361847204], [117.81287156034014, -28.048738237855343], [117.81221717325981, -28.049074540831832], [117.81010686777556, -28.050159029522135], [117.80915205787531, -28.05064968020144], [117.8091481798769, -28.050650761199947], [117.80914615687855, -28.050650696199046]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M4461/2: Mount Magnet gold exploration: (Non-Statutory Report) (1/1/1988-?)  The Mayflower project, (M58/64 and M58/84) was 3 km northeast of the town of Mount Magnet on the Kirkalocka 1:250,000 map sheet. Geology comprised talc-chlorite/tremolite sc", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "WILSON A C", "DATE_FROM": {"$date": "1988-09-01T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "2006-04-11T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1988-09-01T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=27186", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=27186", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 12567, "KEYWORDS": "Geochemistry; Grab sampling; Drilling; RC drilling; Rotary drilling; Vacuum drilling", "OPERATOR": "METANA MINERALS NL", "PROJECT": "Mayflower (Over The Top, The Guts, Below The Belt)", "REGION": "western_australia", "REPORT_NUMBER": "27186", "REPORT_TYPE": "Non-statutory", "REPORT_YEAR": 1988, "TARGET_COMMODITY": "GOLD", "TITLE": "Mayflower (Over The Top, The Guts, Below The Belt)  Project, Non-statutory Report: Exploration Report , September 1988,M58/64, M58/84 .", "popup": "\u003cb\u003eMetana Minerals N.L. (Parkinson rig subcontract)\u003c/b\u003e\u003cbr\u003eLocation: Anomalies and fringe targets, Mayflower lease\u003cbr\u003eActivity: Drilling (vacuum, RAB, RC follow\u2011up)\u003cbr\u003eOutcome: 71 holes drilled; many failed to reach target depth", "time": "1988-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_eefda12a6fcdcac1b5986ed640a38de0.bindTooltip(
+                `<div>
+                     Metana Minerals N.L. (Parkinson rig subcontract) (April–November 1987) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_eefda12a6fcdcac1b5986ed640a38de0.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc = L.geoJson(null, {
+                onEachFeature: geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc_onEachFeature,
+            
+                style: geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc_styler,
+        });
+
+        function geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc_add (data) {
+            geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc
+                .addData(data);
+        }
+            geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc_add({"features": [{"_id": {"$oid": "661ccff80233c852e75fd5cf"}, "geometry": {"coordinates": [[[[122.52011400399468, -28.883329075633334], [122.51667679780923, -28.88332906892084], [122.51666679773253, -28.883319068961843], [122.5166667820737, -28.881263723841847], [122.51666670315731, -28.866652426101542], [122.5166767031221, -28.866642426074836], [122.52201334424971, -28.866642410873773], [122.52201337624972, -28.86664241087368], [122.53334337671265, -28.8666423783929], [122.53335337675178, -28.866652378362833], [122.53335343007768, -28.878928860911557], [122.53335344682746, -28.881996369297415], [122.53335345404969, -28.88331902617024], [122.53334345412247, -28.88332902618601], [122.52011433099464, -28.883329059632473], [122.52011400399468, -28.883329075633334]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "Annual Report - Mount Weld (07/03/2012 - 06/03/2013)", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "FITZGERALD S", "DATE_FROM": {"$date": "2012-03-07T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "2019-05-08T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "2013-03-06T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=97654", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=97654", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 0, "KEYWORDS": "Data review; Geological reconnaissance", "OPERATOR": "Mt Weld Mining Pty Ltd", "PROJECT": "Mount Weld", "REGION": "western_australia", "REPORT_NUMBER": "97654", "REPORT_TYPE": "Annual", "REPORT_YEAR": 2013, "TARGET_COMMODITY": "RARE EARTH ELEMENTS", "TITLE": "Mt Weld Project, Annual Report for the period 07/03/2012 to 06/03/2013, E38/2558. [C56/1999]", "popup": "\u003cb\u003eLynas Corporation Ltd\u003c/b\u003e\u003cbr\u003eLocation: E38/2558\u003cbr\u003eActivity: Drilling (Nil)\u003cbr\u003eOutcome: No drill holes completed", "time": "2013-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc.bindTooltip(
+                `<div>
+                     Lynas Corporation Ltd (07/03/2012 – 06/03/2013) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_951a3b5773d40e2cc09fe5a7e725afd4_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "orange", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_951a3b5773d40e2cc09fe5a7e725afd4_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "orange", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_951a3b5773d40e2cc09fe5a7e725afd4_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_951a3b5773d40e2cc09fe5a7e725afd4.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_951a3b5773d40e2cc09fe5a7e725afd4_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_951a3b5773d40e2cc09fe5a7e725afd4 = L.geoJson(null, {
+                onEachFeature: geo_json_951a3b5773d40e2cc09fe5a7e725afd4_onEachFeature,
+            
+                style: geo_json_951a3b5773d40e2cc09fe5a7e725afd4_styler,
+        });
+
+        function geo_json_951a3b5773d40e2cc09fe5a7e725afd4_add (data) {
+            geo_json_951a3b5773d40e2cc09fe5a7e725afd4
+                .addData(data);
+        }
+            geo_json_951a3b5773d40e2cc09fe5a7e725afd4_add({"features": [{"_id": {"$oid": "661ccf820233c852e75ead45"}, "geometry": {"coordinates": [[[[119.80514325635731, -21.321820599675206], [119.80514135135637, -21.321820343674037], [119.79111258660352, -21.318542881794453], [119.77708412491441, -21.31526542245333], [119.76329994602797, -21.312044972549266], [119.74887858894303, -21.311099994879225], [119.74464205525129, -21.310822384462], [119.7446327522529, -21.31081333545628], [119.74438189527987, -21.30812639153785], [119.73671065506402, -21.308755309328454], [119.73565424871718, -21.308841950024075], [119.73564345871986, -21.3088312390174], [119.73607286642793, -21.30307667436214], [119.73608349241802, -21.303067439362597], [119.75050488270128, -21.30401248619918], [119.75641964068231, -21.304400077548596], [119.7564599741087, -21.303318385223825], [119.75647029409645, -21.303308763224692], [119.76032304239904, -21.30343484571501], [119.7603327083976, -21.30344521272193], [119.76028768207193, -21.3046535480853], [119.76492636896006, -21.304957517928553], [119.76492798995908, -21.30495775892925], [119.77895545911875, -21.30823521908377], [119.79298325011636, -21.311512678939675], [119.80701135338477, -21.314790125264242], [119.8070187423861, -21.314802434270746], [119.80515329035714, -21.32181317767951], [119.80514325635731, -21.321820599675206]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M2467/2: Fieldings Gully copper-zinc / gold exploration: (Non-Statutory Report)", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "MARTIN I D", "DATE_FROM": {"$date": "1984-01-01T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "1990-09-21T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "1984-01-01T00:00:00.000Z"}, "DIGITAL_FILE": 0, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=13438", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=13438", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 5172, "KEYWORDS": "Geochemistry; Rock chip sampling; Soil sampling; Drilling; Diamond drilling; Geology; Geological mapping", "OPERATOR": "ALCOA OF AUSTRALIA LTD", "PROJECT": "Fieldings Gully", "REGION": "western_australia", "REPORT_NUMBER": "13438", "REPORT_TYPE": "Non-statutory", "REPORT_YEAR": 1983, "TARGET_COMMODITY": "COPPER; ZINC", "TITLE": "Fieldings Gully Project, Non-statutory Report: Exploration of Mineral Claims,July 1983, MC45/8773-8777;PA45/3170.", "popup": "\u003cb\u003eAlcoa of Australia Limited\u003c/b\u003e\u003cbr\u003eLocation: Fieldings Gully \u2013 three sites\u003cbr\u003eActivity: Drilling (Diamond drilling)\u003cbr\u003eOutcome: Failed to reach targets; one hole aborted after 66\u00a0m, 150\u00a0m short", "time": "1983-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_951a3b5773d40e2cc09fe5a7e725afd4.bindTooltip(
+                `<div>
+                     Alcoa of Australia Limited (10/1979–12/1979) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_951a3b5773d40e2cc09fe5a7e725afd4.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+        function geo_json_b7a555a81663f6baf9dc9fa760c41203_styler(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "black", "fillColor": "blue", "fillOpacity": 0.3, "weight": 1};
+            }
+        }
+        function geo_json_b7a555a81663f6baf9dc9fa760c41203_highlighter(feature) {
+            switch(feature.properties.REPORT_NUMBER) {
+                default:
+                    return {"color": "#333333", "fillColor": "blue", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_b7a555a81663f6baf9dc9fa760c41203_onEachFeature(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_b7a555a81663f6baf9dc9fa760c41203.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_b7a555a81663f6baf9dc9fa760c41203_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_b7a555a81663f6baf9dc9fa760c41203 = L.geoJson(null, {
+                onEachFeature: geo_json_b7a555a81663f6baf9dc9fa760c41203_onEachFeature,
+            
+                style: geo_json_b7a555a81663f6baf9dc9fa760c41203_styler,
+        });
+
+        function geo_json_b7a555a81663f6baf9dc9fa760c41203_add (data) {
+            geo_json_b7a555a81663f6baf9dc9fa760c41203
+                .addData(data);
+        }
+            geo_json_b7a555a81663f6baf9dc9fa760c41203_add({"features": [{"_id": {"$oid": "661ccfbb0233c852e75f4b5f"}, "geometry": {"coordinates": [[[[119.48479122477572, -30.798725466156085], [119.48478122474533, -30.798715466154167], [119.48478080647887, -30.78205850583875], [119.46812432012791, -30.782058764527022], [119.45145786893367, -30.782059010609256], [119.45144786892214, -30.782049010605178], [119.45144759414308, -30.76538207616648], [119.45144735601427, -30.748507538606017], [119.44517026063917, -30.742047074487544], [119.44517025963918, -30.74204707348755], [119.43174663878787, -30.72822740671529], [119.43174580379268, -30.728226428718653], [119.43168546714375, -30.72814575395403], [119.40492002682417, -30.700593389891306], [119.40492132882868, -30.70057832588429], [119.42091263578493, -30.68898221312132], [119.42092567870816, -30.688983341048026], [119.46274572939902, -30.732038299035175], [119.46812390419207, -30.73203834310932], [119.48479081313522, -30.732038393989832], [119.50145743596867, -30.73203822990256], [119.50146743590727, -30.732048229933284], [119.50146748385484, -30.74871510592865], [119.50146739501326, -30.765381910694536], [119.50146749141436, -30.782048435416215], [119.50146777080303, -30.798715271025046], [119.50145777085623, -30.798725271025205], [119.48479122477572, -30.798725466156085]]]], "type": "MultiPolygon"}, "properties": {"ABSTRACT": "M6974/4: Koolyanobbing nickel/gold exploration: (Annual Report) (1/1/1999-1/1/2000)  A review of all previous exploration and RC drilling were undertaken on M77/676, E77/438,874, Koolyanobbing in 1999. RC drilling of the best geophysical and geochemi", "AUTHOR_COMPANY": null, "AUTHOR_NAME": "HOLMES J S", "DATE_FROM": {"$date": "1999-01-01T00:00:00.000Z"}, "DATE_RELEASED": {"$date": "2008-04-17T00:00:00.000Z"}, "DATE_STATUS": "", "DATE_TO": {"$date": "2000-01-01T00:00:00.000Z"}, "DIGITAL_FILE": -1, "DPXE_ABS": "https://wamex.dmp.wa.gov.au/WAMEX/ExternalTool/CreateReportAbstractDialog?aNumber=60558", "DPXE_REP": "https://wamex.dmp.wa.gov.au/Wamex/Search/ReportDetails?ANumber=60558", "EXTRACT_DATE": {"$date": "2024-04-11T00:00:00.000Z"}, "IS_SHAPED": -1, "ITEM_NO": 16329, "KEYWORDS": "Drilling; RC drilling; Literature review", "OPERATOR": "DELTA GOLD LTD", "PROJECT": "Koolyanobbing", "REGION": "western_australia", "REPORT_NUMBER": "60558", "REPORT_TYPE": "Annual", "REPORT_YEAR": 2000, "TARGET_COMMODITY": "BASE METALS; NICKEL", "TITLE": "Koolyanobbing Project, M77/676, E77/438,874,  Annual Report for the period 01/01/1999 to 31/12/1999.", "popup": "\u003cb\u003eDelta Gold Ltd\u003c/b\u003e\u003cbr\u003eLocation: Jocks Fury\u003cbr\u003eActivity: Drilling (RC Drilling)\u003cbr\u003eOutcome: Holes failed to reach target depths; no significant assays", "time": "2000-01-01"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_b7a555a81663f6baf9dc9fa760c41203.bindTooltip(
+                `<div>
+                     Delta Gold Ltd (June 1999) - Click for details
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            geo_json_b7a555a81663f6baf9dc9fa760c41203.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+            var tile_layer_61fa3aef977027651007ad48b0eb655b = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+                {"attribution": "\u00a9 \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 20, "maxZoom": 20, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abcd", "tms": false}
+            );
+        
+    
+            tile_layer_61fa3aef977027651007ad48b0eb655b.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+            var tile_layer_c90accda26749dbe05f9bf41adac1804 = L.tileLayer(
+                "Stamen Terrain",
+                {"attribution": "Map tiles by \u003ca href=\"http://stamen.com\"\u003eStamen Design\u003c/a\u003e, \u003ca href=\"http://creativecommons.org/licenses/by/3.0\"\u003eCC BY 3.0\u003c/a\u003e \u2014 Data by \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, \u003ca href=\"http://creativecommons.org/licenses/by-sa/2.0/\"\u003eCC BY-SA\u003c/a\u003e", "detectRetina": false, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_c90accda26749dbe05f9bf41adac1804.addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+        
+    
+            var layer_control_b99f2eb23b8e4b2166e4c8c41a8ec9fd_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_b8facfedd34e2412a8eb07c1203a9f49,
+                    "Dark Map" : tile_layer_61fa3aef977027651007ad48b0eb655b,
+                    "Terrain" : tile_layer_c90accda26749dbe05f9bf41adac1804,
+                },
+                overlays :  {
+                    "macro_element_778be998131800eb2b4048fe5c349549" : marker_cluster_778be998131800eb2b4048fe5c349549,
+                    "macro_element_df270d8c59ee49fc05d59ae8e409785f" : geo_json_df270d8c59ee49fc05d59ae8e409785f,
+                    "macro_element_b09fe282d26bed891bd9b6c49dd0998f" : geo_json_b09fe282d26bed891bd9b6c49dd0998f,
+                    "macro_element_f9c2acf6586bcd77c0954d88765a645d" : geo_json_f9c2acf6586bcd77c0954d88765a645d,
+                    "macro_element_0b82a8f422d1dcec497c114488cbd5ce" : geo_json_0b82a8f422d1dcec497c114488cbd5ce,
+                    "macro_element_1726e1d03e7244b66e57f9a024ea43e4" : geo_json_1726e1d03e7244b66e57f9a024ea43e4,
+                    "macro_element_c04720af65a41aebf3caa2e12db2fbc9" : geo_json_c04720af65a41aebf3caa2e12db2fbc9,
+                    "macro_element_3f248ebe98fa0c150fd93c0b9efd702b" : geo_json_3f248ebe98fa0c150fd93c0b9efd702b,
+                    "macro_element_b2abe5df8e22d62ca7cc3697d1a85283" : geo_json_b2abe5df8e22d62ca7cc3697d1a85283,
+                    "macro_element_0fc6396869544c7606436b0bc59419fa" : geo_json_0fc6396869544c7606436b0bc59419fa,
+                    "macro_element_89402de6493ac18624c9b8dccfce30e9" : geo_json_89402de6493ac18624c9b8dccfce30e9,
+                    "macro_element_6f179b5bc81ffe22a465d9bac30a64ab" : geo_json_6f179b5bc81ffe22a465d9bac30a64ab,
+                    "macro_element_56113987cbdca1d7c19fc1ced4289a84" : geo_json_56113987cbdca1d7c19fc1ced4289a84,
+                    "macro_element_83c31ab6f79eeb2b16a8065a2bfbec34" : geo_json_83c31ab6f79eeb2b16a8065a2bfbec34,
+                    "macro_element_eefda12a6fcdcac1b5986ed640a38de0" : geo_json_eefda12a6fcdcac1b5986ed640a38de0,
+                    "macro_element_cc35d72b4cd7e10ab8dabf68d8a0acdc" : geo_json_cc35d72b4cd7e10ab8dabf68d8a0acdc,
+                    "macro_element_951a3b5773d40e2cc09fe5a7e725afd4" : geo_json_951a3b5773d40e2cc09fe5a7e725afd4,
+                    "macro_element_b7a555a81663f6baf9dc9fa760c41203" : geo_json_b7a555a81663f6baf9dc9fa760c41203,
+                },
+            };
+            let layer_control_b99f2eb23b8e4b2166e4c8c41a8ec9fd = L.control.layers(
+                layer_control_b99f2eb23b8e4b2166e4c8c41a8ec9fd_layers.base_layers,
+                layer_control_b99f2eb23b8e4b2166e4c8c41a8ec9fd_layers.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_583e3799b39ab7a76d44e78c9f729a37);
+
+        
+</script>
+</html>
