@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aeris & Andromeda Mining Projects</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        .table-container {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .filters-container {
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px 12px 0 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .filter-input {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #64748b;
+            border-radius: 4px;
+            font-size: 12px;
+            background: white;
+            color: #1f2937;
+            transition: border-color 0.2s ease;
+        }
+        
+        .filter-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        
+        .filter-input::placeholder {
+            color: #9ca3af;
+            font-size: 11px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        th {
+            background: #1e293b;
+            color: white;
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.025em;
+            border-bottom: 1px solid #334155;
+        }
+        
+        th:first-child {
+            border-radius: 12px 0 0 0;
+        }
+        
+        th:last-child {
+            border-radius: 0 12px 0 0;
+        }
+        
+        .filter-row th {
+            background: #334155;
+            padding: 8px 12px;
+            border-bottom: 2px solid #475569;
+        }
+        
+        .filter-row th:first-child {
+            border-radius: 0;
+        }
+        
+        .filter-row th:last-child {
+            border-radius: 0;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+            line-height: 1.5;
+            height: 60px;
+            vertical-align: top;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        
+        tr:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .company-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .project-name {
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .country {
+            color: #6b7280;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .status-exploration {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .status-production {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-feasibility {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-care {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .divestment-score {
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .score-high {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .score-medium {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .score-low {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .summary {
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height: 1.4;
+            cursor: help;
+            color: #4b5563;
+        }
+        
+        .tooltip {
+            position: fixed;
+            background: white;
+            color: #1f2937;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+            max-width: 400px;
+            font-size: 13px;
+            line-height: 1.4;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .tooltip.show {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .table-container {
+                margin: 10px 0;
+                border-radius: 8px;
+            }
+            
+            .filters-container {
+                padding: 15px;
+            }
+            
+            .filters-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            th, td {
+                padding: 8px 6px;
+                font-size: 12px;
+            }
+            
+            th {
+                padding: 12px 8px;
+            }
+            
+            .filter-row th {
+                padding: 6px 8px;
+            }
+            
+            .filter-input {
+                padding: 4px 6px;
+                font-size: 11px;
+            }
+            
+            .summary {
+                max-width: 200px;
+                -webkit-line-clamp: 1;
+            }
+            
+            .status {
+                font-size: 10px;
+                padding: 2px 6px;
+            }
+            
+            td {
+                height: 50px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .table-container {
+                font-size: 11px;
+            }
+            
+            th, td {
+                padding: 6px 4px;
+            }
+            
+            .filter-row th {
+                padding: 4px 6px;
+            }
+            
+            .filter-input {
+                padding: 3px 4px;
+                font-size: 10px;
+            }
+            
+            .summary {
+                max-width: 150px;
+            }
+            
+            td {
+                height: 45px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="table-container">
+        <table id="projectsTable">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Project</th>
+                    <th>Country</th>
+                    <th>Status</th>
+                    <th>Divestment Score</th>
+                    <th>Summary</th>
+                </tr>
+                <tr class="filter-row">
+                    <th><input type="text" id="companyFilter" class="filter-input" placeholder="Filter company..."></th>
+                    <th><input type="text" id="projectFilter" class="filter-input" placeholder="Filter project..."></th>
+                    <th><input type="text" id="countryFilter" class="filter-input" placeholder="Filter country..."></th>
+                    <th><input type="text" id="statusFilter" class="filter-input" placeholder="Filter status..."></th>
+                    <th><input type="text" id="scoreFilter" class="filter-input" placeholder="Filter score..."></th>
+                    <th><input type="text" id="summaryFilter" class="filter-input" placeholder="Filter summary..."></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="company-name">AERIS RESOURCES LIMITED</td>
+                    <td class="project-name">Jaguar Operations</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-care">Care, Maintenance & Rehabilitation</span></td>
+                    <td><span class="divestment-score score-high">1.0</span></td>
+                    <td class="summary" data-full-text="Geography Mismatch (Project: Australia/Western Australia, Core: Australia/Queensland); High Isolation (Top 0% outlier, 1928 km from peers); High Synergy (Aligned commodity, competitor at 8.4 km)">Geography Mismatch (Project: Australia/Western Australia, Core: Australia/Queensland); High Isolation (Top 0% outlier, 1928 km from peers); High Synergy (Aligned commodity, competitor at 8.4 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">ANDROMEDA METALS LIMITED</td>
+                    <td class="project-name">Drummond Epithermal Gold Project</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-high">1.0</span></td>
+                    <td class="summary" data-full-text="Commodity Mismatch (Project: Precious Metals, Core: Industrial Minerals & Chemicals); Geography Mismatch (Project: Australia/Queensland, Core: Australia/South Australia); High Isolation (Top 0% outlier, 1711 km from peers); High Synergy (Aligned commodity, competitor at 0.0 km)">Commodity Mismatch (Project: Precious Metals, Core: Industrial Minerals & Chemicals); Geography Mismatch (Project: Australia/Queensland, Core: Australia/South Australia); High Isolation (Top 0% outlier, 1711 km from peers); High Synergy (Aligned commodity, competitor at 0.0 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">AERIS RESOURCES LIMITED</td>
+                    <td class="project-name">Torrens Exploration Project</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-high">0.96</span></td>
+                    <td class="summary" data-full-text="Commodity Mismatch (Project: Base Metals, Core: Precious Metals); Geography Mismatch (Project: Australia/South Australia, Core: Australia/Queensland); High Isolation (88th percentile, 945 km from peers); High Synergy (Aligned commodity, competitor at 29.3 km)">Commodity Mismatch (Project: Base Metals, Core: Precious Metals); Geography Mismatch (Project: Australia/South Australia, Core: Australia/Queensland); High Isolation (88th percentile, 945 km from peers); High Synergy (Aligned commodity, competitor at 29.3 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">ANDROMEDA METALS LIMITED</td>
+                    <td class="project-name">Moonta Copper Gold Project</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-high">0.9</span></td>
+                    <td class="summary" data-full-text="Commodity Mismatch (Project: Precious Metals, Base Metals, Core: Industrial Minerals & Chemicals); High Synergy (Aligned commodity, competitor at 28.0 km)">Commodity Mismatch (Project: Precious Metals, Base Metals, Core: Industrial Minerals & Chemicals); High Synergy (Aligned commodity, competitor at 28.0 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">ANDROMEDA METALS LIMITED</td>
+                    <td class="project-name">Wudinna Gold Project</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-medium">0.8</span></td>
+                    <td class="summary" data-full-text="Commodity Mismatch (Project: Precious Metals, Core: Industrial Minerals & Chemicals); High Synergy (Aligned commodity, competitor at 23.8 km)">Commodity Mismatch (Project: Precious Metals, Core: Industrial Minerals & Chemicals); High Synergy (Aligned commodity, competitor at 23.8 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">AERIS RESOURCES LIMITED</td>
+                    <td class="project-name">Cheesemans Creek Project</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-medium">0.77</span></td>
+                    <td class="summary" data-full-text="Geography Mismatch (Project: Australia/New South Wales, Core: Australia/Queensland); High Synergy (Aligned commodity, competitor at 14.1 km)">Geography Mismatch (Project: Australia/New South Wales, Core: Australia/Queensland); High Synergy (Aligned commodity, competitor at 14.1 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">AERIS RESOURCES LIMITED</td>
+                    <td class="project-name">Canbelego Project</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-medium">0.73</span></td>
+                    <td class="summary" data-full-text="Geography Mismatch (Project: Australia/New South Wales, Core: Australia/Queensland); High Synergy (Aligned commodity, competitor at 2.7 km)">Geography Mismatch (Project: Australia/New South Wales, Core: Australia/Queensland); High Synergy (Aligned commodity, competitor at 2.7 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">AERIS RESOURCES LIMITED</td>
+                    <td class="project-name">Tritton Copper Operations</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-production">Production & Operations</span></td>
+                    <td><span class="divestment-score score-medium">0.69</span></td>
+                    <td class="summary" data-full-text="Geography Mismatch (Project: Australia/New South Wales, Core: Australia/Queensland); High Synergy (Aligned commodity, competitor at 16.4 km)">Geography Mismatch (Project: Australia/New South Wales, Core: Australia/Queensland); High Synergy (Aligned commodity, competitor at 16.4 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">AERIS RESOURCES LIMITED</td>
+                    <td class="project-name">Stockman Project</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-feasibility">Feasibility, Development & Construction</span></td>
+                    <td><span class="divestment-score score-medium">0.68</span></td>
+                    <td class="summary" data-full-text="Commodity Mismatch (Project: Base Metals, Core: Precious Metals); Geography Mismatch (Project: Australia/Victoria, Core: Australia/Queensland); Operational Synergy (Infrastructure, competitor at 19.0 km)">Commodity Mismatch (Project: Base Metals, Core: Precious Metals); Geography Mismatch (Project: Australia/Victoria, Core: Australia/Queensland); Operational Synergy (Infrastructure, competitor at 19.0 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">ANDROMEDA METALS LIMITED</td>
+                    <td class="project-name">Camel Lake Halloysite Project</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-medium">0.55</span></td>
+                    <td class="summary" data-full-text="High Isolation (85th percentile, 416 km from peers); High Synergy (Aligned commodity, competitor at 7.8 km)">High Isolation (85th percentile, 416 km from peers); High Synergy (Aligned commodity, competitor at 7.8 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">AERIS RESOURCES LIMITED</td>
+                    <td class="project-name">Cracow Gold Operations</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-production">Production & Operations</span></td>
+                    <td><span class="divestment-score score-medium">0.52</span></td>
+                    <td class="summary" data-full-text="High Synergy (Aligned commodity, competitor at 19.9 km)">High Synergy (Aligned commodity, competitor at 19.9 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">AERIS RESOURCES LIMITED</td>
+                    <td class="project-name">North Queensland Copper Operations (Barbara Project)</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-feasibility">Feasibility, Development & Construction</span></td>
+                    <td><span class="divestment-score score-low">0.48</span></td>
+                    <td class="summary" data-full-text="High Synergy (Aligned commodity, competitor at 9.2 km)">High Synergy (Aligned commodity, competitor at 9.2 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">ANDROMEDA METALS LIMITED</td>
+                    <td class="project-name">Mount Hope Kaolin Project</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-low">0.45</span></td>
+                    <td class="summary" data-full-text="High Synergy (Aligned commodity, competitor at 10.8 km)">High Synergy (Aligned commodity, competitor at 10.8 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">ANDROMEDA METALS LIMITED</td>
+                    <td class="project-name">North Queensland Copper Operations (Mt Colin Mine)</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-production">Production & Operations</span></td>
+                    <td><span class="divestment-score score-low">0.44</span></td>
+                    <td class="summary" data-full-text="High Synergy (Aligned commodity, competitor at 0.0 km)">High Synergy (Aligned commodity, competitor at 0.0 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">ANDROMEDA METALS LIMITED</td>
+                    <td class="project-name">Eyre Kaolin Project</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-low">0.35</span></td>
+                    <td class="summary" data-full-text="High Synergy (Aligned commodity, competitor at 4.9 km)">High Synergy (Aligned commodity, competitor at 4.9 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">ANDROMEDA METALS LIMITED</td>
+                    <td class="project-name">Great White Project</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status status-feasibility">Feasibility, Development & Construction</span></td>
+                    <td><span class="divestment-score score-low">0.3</span></td>
+                    <td class="summary" data-full-text="High Synergy (Aligned commodity, competitor at 41.4 km)">High Synergy (Aligned commodity, competitor at 41.4 km)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Filter functionality
+        function setupFilters() {
+            const filters = {
+                company: document.getElementById('companyFilter'),
+                project: document.getElementById('projectFilter'),
+                country: document.getElementById('countryFilter'),
+                status: document.getElementById('statusFilter'),
+                score: document.getElementById('scoreFilter'),
+                summary: document.getElementById('summaryFilter')
+            };
+
+            const table = document.getElementById('projectsTable');
+            const rows = Array.from(table.getElementsByTagName('tr')).slice(2); // Skip header and filter rows
+
+            function filterTable() {
+                const filterValues = {
+                    company: filters.company.value.toLowerCase(),
+                    project: filters.project.value.toLowerCase(),
+                    country: filters.country.value.toLowerCase(),
+                    status: filters.status.value.toLowerCase(),
+                    score: filters.score.value.toLowerCase(),
+                    summary: filters.summary.value.toLowerCase()
+                };
+
+                rows.forEach(row => {
+                    const cells = row.getElementsByTagName('td');
+                    const rowData = {
+                        company: cells[0].textContent.toLowerCase(),
+                        project: cells[1].textContent.toLowerCase(),
+                        country: cells[2].textContent.toLowerCase(),
+                        status: cells[3].textContent.toLowerCase(),
+                        score: cells[4].textContent.toLowerCase(),
+                        summary: cells[5].textContent.toLowerCase()
+                    };
+
+                    const matches = Object.keys(filterValues).every(key => 
+                        filterValues[key] === '' || rowData[key].includes(filterValues[key])
+                    );
+
+                    row.style.display = matches ? '' : 'none';
+                });
+            }
+
+            Object.values(filters).forEach(filter => {
+                filter.addEventListener('input', filterTable);
+            });
+        }
+
+        // Tooltip functionality
+        function setupTooltips() {
+            const summaryElements = document.querySelectorAll('.summary');
+            let tooltip = null;
+
+            summaryElements.forEach(element => {
+                element.removeAttribute('title');
+                
+                element.addEventListener('mouseenter', function(e) {
+                    const fullText = this.getAttribute('data-full-text');
+                    
+                    if (tooltip) {
+                        tooltip.remove();
+                    }
+                    
+                    tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = fullText;
+                    document.body.appendChild(tooltip);
+                    
+                    const rect = this.getBoundingClientRect();
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    
+                    let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+                    let top = rect.top - tooltipRect.height - 10;
+                    
+                    if (left < 10) left = 10;
+                    if (left + tooltipRect.width > window.innerWidth - 10) {
+                        left = window.innerWidth - tooltipRect.width - 10;
+                    }
+                    if (top < 10) {
+                        top = rect.bottom + 10;
+                    }
+                    
+                    tooltip.style.left = left + 'px';
+                    tooltip.style.top = top + 'px';
+                    
+                    setTimeout(() => {
+                        if (tooltip) tooltip.classList.add('show');
+                    }, 10);
+                });
+
+                element.addEventListener('mouseleave', function() {
+                    if (tooltip) {
+                        tooltip.classList.remove('show');
+                        setTimeout(() => {
+                            if (tooltip) {
+                                tooltip.remove();
+                                tooltip = null;
+                            }
+                        }, 200);
+                    }
+                });
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            setupFilters();
+            setupTooltips();
+        });
+    </script>
+</body>
+</html>
