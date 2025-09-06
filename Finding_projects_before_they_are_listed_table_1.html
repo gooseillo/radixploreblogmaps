@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mining Projects Analysis Table</title>
+    <style>
+        .modern-table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            background: white;
+        }
+
+        /* Added filter row styling */
+        .filter-row {
+            background: #f8fafc;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .filter-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 12px;
+            background: white;
+            color: #374151;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .filter-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 1px #3b82f6;
+        }
+
+        .filter-input::placeholder {
+            color: #9ca3af;
+            font-style: italic;
+        }
+
+        .modern-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .modern-table th {
+            background: #1e293b;
+            color: white;
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem 0.75rem;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid #0f172a;
+        }
+
+        .modern-table td {
+            padding: 0.875rem 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+            max-height: 4.5em;
+            overflow: hidden;
+        }
+
+        /* Added filter cell styling */
+        .filter-cell {
+            padding: 0.5rem 0.75rem;
+            background: #f8fafc;
+        }
+
+        .modern-table tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .modern-table tbody tr:hover {
+            background-color: #f1f5f9;
+            transition: background-color 0.2s ease;
+        }
+
+        /* Added hidden row styling for filtered results */
+        .modern-table tbody tr.hidden {
+            display: none;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .status-exploration {
+            background-color: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-feasibility {
+            background-color: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .status-production {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        .divestment-score {
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            min-width: 60px;
+            display: inline-block;
+        }
+
+        .score-high {
+            background-color: #fecaca;
+            color: #dc2626;
+        }
+
+        .score-medium {
+            background-color: #fed7aa;
+            color: #ea580c;
+        }
+
+        .score-low {
+            background-color: #dcfce7;
+            color: #16a34a;
+        }
+
+        .company-name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .project-name {
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .country {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .summary {
+            max-width: 300px;
+            font-size: 13px;
+            color: #475569;
+            line-height: 1.4;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+            overflow: hidden;
+            hyphens: auto;
+            height: 3.6em; /* Approximately 3 lines */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+            position: relative;
+            cursor: help;
+        }
+
+        .tooltip {
+            position: fixed;
+            /* Changed to light background with dark text for better visibility */
+            background: #ffffff;
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 12px;
+            line-height: 1.4;
+            white-space: normal;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            word-wrap: break-word;
+            pointer-events: none;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 20px;
+            border: 5px solid transparent;
+            /* Updated arrow color to match new white background */
+            border-top-color: #ffffff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .modern-table-container {
+                margin: 1rem 0;
+                border-radius: 8px;
+            }
+
+            .modern-table {
+                font-size: 13px;
+            }
+
+            .modern-table th,
+            .modern-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .modern-table th {
+                font-size: 12px;
+            }
+
+            /* Added responsive filter styling */
+            .filter-cell {
+                padding: 0.375rem 0.5rem;
+            }
+
+            .filter-input {
+                padding: 0.375rem;
+                font-size: 11px;
+            }
+
+            .summary {
+                max-width: 250px;
+                font-size: 12px;
+                height: 3.2em;
+                -webkit-line-clamp: 2;
+            }
+
+            .modern-table tbody tr {
+                height: 4em;
+            }
+
+            .modern-table td {
+                max-height: 4em;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .modern-table {
+                font-size: 12px;
+            }
+
+            .modern-table th,
+            .modern-table td {
+                padding: 0.5rem 0.375rem;
+            }
+
+            .filter-cell {
+                padding: 0.25rem 0.375rem;
+            }
+
+            .filter-input {
+                padding: 0.25rem;
+                font-size: 10px;
+            }
+
+            .summary {
+                max-width: 200px;
+                font-size: 11px;
+                height: 2.8em;
+                -webkit-line-clamp: 2;
+            }
+
+            .status-badge {
+                font-size: 11px;
+                padding: 0.125rem 0.375rem;
+            }
+
+            .modern-table tbody tr {
+                height: 3.5em;
+            }
+
+            .modern-table td {
+                max-height: 3.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="modern-table-container">
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Project</th>
+                    <th>Country</th>
+                    <th>Status</th>
+                    <th>Divestment Score</th>
+                    <th>Summary</th>
+                </tr>
+                <!-- Added filter row with input fields for each column -->
+                <tr class="filter-row">
+                    <td class="filter-cell">
+                        <input type="text" class="filter-input" placeholder="Filter company..." data-column="0">
+                    </td>
+                    <td class="filter-cell">
+                        <input type="text" class="filter-input" placeholder="Filter project..." data-column="1">
+                    </td>
+                    <td class="filter-cell">
+                        <input type="text" class="filter-input" placeholder="Filter country..." data-column="2">
+                    </td>
+                    <td class="filter-cell">
+                        <input type="text" class="filter-input" placeholder="Filter status..." data-column="3">
+                    </td>
+                    <td class="filter-cell">
+                        <input type="text" class="filter-input" placeholder="Filter score..." data-column="4">
+                    </td>
+                    <td class="filter-cell">
+                        <input type="text" class="filter-input" placeholder="Filter summary..." data-column="5">
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="company-name">Southern Hemisphere Mining Limited</td>
+                    <td class="project-name">New Cardawan Copper Project</td>
+                    <td class="country">Australia</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-high">1.0</span></td>
+                    <td class="summary" data-full-text="Geography Mismatch (Project: Australia/Western Australia, Core: Chile/Arica y Parinacota Region); High Isolation (Top 0% outlier, 13781 km from peers); High Synergy (Aligned commodity, competitor at 36.5 km)">Geography Mismatch (Project: Australia/Western Australia, Core: Chile/Arica y Parinacota Region); High Isolation (Top 0% outlier, 13781 km from peers); High Synergy (Aligned commodity, competitor at 36.5 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Refined Energy Corp.</td>
+                    <td class="project-name">Horizon South Property</td>
+                    <td class="country">United States</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-high">1.0</span></td>
+                    <td class="summary" data-full-text="Commodity Mismatch (Project: Lithium, Core: Uranium); Geography Mismatch (Project: United States/Nevada, Core: Canada/Saskatchewan); High Isolation (Top 0% outlier, 2293 km from peers); High Synergy (Aligned commodity, competitor at 11.6 km)">Commodity Mismatch (Project: Lithium, Core: Uranium); Geography Mismatch (Project: United States/Nevada, Core: Canada/Saskatchewan); High Isolation (Top 0% outlier, 2293 km from peers); High Synergy (Aligned commodity, competitor at 11.6 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Pasinex Resources Limited</td>
+                    <td class="project-name">Gunman Project</td>
+                    <td class="country">United States</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-high">1.0</span></td>
+                    <td class="summary" data-full-text="Geography Mismatch (Project: United States/Nevada, Core: Turkey); High Isolation (Top 0% outlier, 10815 km from peers); High Synergy (Aligned commodity, competitor at 4.8 km)">Geography Mismatch (Project: United States/Nevada, Core: Turkey); High Isolation (Top 0% outlier, 10815 km from peers); High Synergy (Aligned commodity, competitor at 4.8 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Refined Energy Corp.</td>
+                    <td class="project-name">Lac Simard Lithium Property</td>
+                    <td class="country">Canada</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-medium">0.93</span></td>
+                    <td class="summary" data-full-text="Commodity Mismatch (Project: Lithium, Core: Uranium); Geography Mismatch (Project: Canada/Quebec, Core: Canada/Saskatchewan); High Isolation (80th percentile, 2107 km from peers); High Synergy (Aligned commodity, competitor at 7.1 km)">Commodity Mismatch (Project: Lithium, Core: Uranium); Geography Mismatch (Project: Canada/Quebec, Core: Canada/Saskatchewan); High Isolation (80th percentile, 2107 km from peers); High Synergy (Aligned commodity, competitor at 7.1 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Southern Hemisphere Mining Limited</td>
+                    <td class="project-name">Colina2 Gold-Copper Prospect</td>
+                    <td class="country">Chile</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-medium">0.86</span></td>
+                    <td class="summary" data-full-text="Geography Mismatch (Project: Chile/Coquimbo Region, Core: Chile/Arica y Parinacota Region); High Synergy (Aligned commodity, competitor at 29.8 km)">Geography Mismatch (Project: Chile/Coquimbo Region, Core: Chile/Arica y Parinacota Region); High Synergy (Aligned commodity, competitor at 29.8 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Southern Hemisphere Mining Limited</td>
+                    <td class="project-name">Los Pumas Battery Metal Manganese Project</td>
+                    <td class="country">Chile</td>
+                    <td><span class="status-badge status-feasibility">Feasibility, Development & Construction</span></td>
+                    <td><span class="divestment-score score-medium">0.80</span></td>
+                    <td class="summary" data-full-text="Commodity Mismatch (Project: Industrial Minerals & Chemicals, Iron Ore & Steel, Core: Base Metals); High Isolation (80th percentile, 1224 km from peers); Operational Synergy (Infrastructure, competitor at 45.2 km)">Commodity Mismatch (Project: Industrial Minerals & Chemicals, Iron Ore & Steel, Core: Base Metals); High Isolation (80th percentile, 1224 km from peers); Operational Synergy (Infrastructure, competitor at 45.2 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Southern Hemisphere Mining Limited</td>
+                    <td class="project-name">Lago Lithium Brine Project</td>
+                    <td class="country">Chile</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-medium">0.79</span></td>
+                    <td class="summary" data-full-text="Commodity Mismatch (Project: Lithium, Core: Base Metals); Geography Mismatch (Project: Chile/Antofagasta Region, Core: Chile/Arica y Parinacota Region); High Synergy (Aligned commodity, competitor at 30.1 km)">Commodity Mismatch (Project: Lithium, Core: Base Metals); Geography Mismatch (Project: Chile/Antofagasta Region, Core: Chile/Arica y Parinacota Region); High Synergy (Aligned commodity, competitor at 30.1 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Southern Hemisphere Mining Limited</td>
+                    <td class="project-name">Llahuin Copper-Gold-Moly Project</td>
+                    <td class="country">Chile</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-medium">0.72</span></td>
+                    <td class="summary" data-full-text="Geography Mismatch (Project: Chile/Coquimbo Region, Core: Chile/Arica y Parinacota Region); High Synergy (Aligned commodity, competitor at 18.3 km)">Geography Mismatch (Project: Chile/Coquimbo Region, Core: Chile/Arica y Parinacota Region); High Synergy (Aligned commodity, competitor at 18.3 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Refined Energy Corp.</td>
+                    <td class="project-name">Dufferin Project</td>
+                    <td class="country">Canada</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-low">0.46</span></td>
+                    <td class="summary" data-full-text="High Synergy (Aligned commodity, competitor at 26.2 km)">High Synergy (Aligned commodity, competitor at 26.2 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Refined Energy Corp.</td>
+                    <td class="project-name">Basin Project</td>
+                    <td class="country">Canada</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-low">0.39</span></td>
+                    <td class="summary" data-full-text="High Synergy (Aligned commodity, competitor at 4.9 km)">High Synergy (Aligned commodity, competitor at 4.9 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Refined Energy Corp.</td>
+                    <td class="project-name">Milner Project</td>
+                    <td class="country">Canada</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-low">0.32</span></td>
+                    <td class="summary" data-full-text="High Synergy (Aligned commodity, competitor at 1.5 km)">High Synergy (Aligned commodity, competitor at 1.5 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Pasinex Resources Limited</td>
+                    <td class="project-name">Golcuk Copper Project</td>
+                    <td class="country">Turkey</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-low">0.28</span></td>
+                    <td class="summary" data-full-text="High Isolation (80th percentile, 284 km from peers)">High Isolation (80th percentile, 284 km from peers)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Pasinex Resources Limited</td>
+                    <td class="project-name">Pinargozu Zinc Mine</td>
+                    <td class="country">Turkey</td>
+                    <td><span class="status-badge status-production">Production & Operations</span></td>
+                    <td><span class="divestment-score score-low">0.21</span></td>
+                    <td class="summary" data-full-text="Core Project">Core Project</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Pasinex Resources Limited</td>
+                    <td class="project-name">Sarıkaya Zinc Project</td>
+                    <td class="country">Turkey</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-low">0.20</span></td>
+                    <td class="summary" data-full-text="Operational Synergy (Infrastructure, competitor at 39.0 km)">Operational Synergy (Infrastructure, competitor at 39.0 km)</td>
+                </tr>
+                <tr>
+                    <td class="company-name">Pasinex Resources Limited</td>
+                    <td class="project-name">Akkaya Zinc Project</td>
+                    <td class="country">Turkey</td>
+                    <td><span class="status-badge status-exploration">Exploration & Resource Definition</span></td>
+                    <td><span class="divestment-score score-low">0.14</span></td>
+                    <td class="summary" data-full-text="Core Project">Core Project</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="tooltip" class="tooltip"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tooltip = document.getElementById('tooltip');
+            const summaryElements = document.querySelectorAll('.summary');
+            
+            const filterInputs = document.querySelectorAll('.filter-input');
+            const tableRows = document.querySelectorAll('tbody tr');
+
+            // Filter function
+            function filterTable() {
+                const filters = Array.from(filterInputs).map(input => ({
+                    column: parseInt(input.dataset.column),
+                    value: input.value.toLowerCase().trim()
+                }));
+
+                tableRows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    let showRow = true;
+
+                    filters.forEach(filter => {
+                        if (filter.value && cells[filter.column]) {
+                            const cellText = cells[filter.column].textContent.toLowerCase();
+                            if (!cellText.includes(filter.value)) {
+                                showRow = false;
+                            }
+                        }
+                    });
+
+                    if (showRow) {
+                        row.classList.remove('hidden');
+                    } else {
+                        row.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Add event listeners to filter inputs
+            filterInputs.forEach(input => {
+                input.addEventListener('input', filterTable);
+                input.addEventListener('keyup', filterTable);
+            });
+
+            // Existing tooltip functionality
+            summaryElements.forEach(element => {
+                element.addEventListener('mouseenter', function(e) {
+                    const fullText = this.getAttribute('data-full-text');
+                    if (fullText) {
+                        tooltip.textContent = fullText;
+                        tooltip.classList.add('show');
+                        
+                        // Position tooltip
+                        const rect = this.getBoundingClientRect();
+                        const tooltipRect = tooltip.getBoundingClientRect();
+                        
+                        let left = rect.left;
+                        let top = rect.top - tooltipRect.height - 10;
+                        
+                        // Adjust if tooltip goes off screen
+                        if (left + tooltipRect.width > window.innerWidth) {
+                            left = window.innerWidth - tooltipRect.width - 10;
+                        }
+                        if (left < 10) {
+                            left = 10;
+                        }
+                        if (top < 10) {
+                            top = rect.bottom + 10;
+                        }
+                        
+                        tooltip.style.left = left + 'px';
+                        tooltip.style.top = top + 'px';
+                    }
+                });
+
+                element.addEventListener('mouseleave', function() {
+                    tooltip.classList.remove('show');
+                });
+            });
+
+            // Hide tooltip when scrolling
+            window.addEventListener('scroll', function() {
+                tooltip.classList.remove('show');
+            });
+        });
+    </script>
+</body>
+</html>
