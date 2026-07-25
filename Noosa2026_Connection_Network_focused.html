@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Noosa 2026 — Exhibitor Connection Network</title>
+<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+<style>
+  :root { --ink:#14243a; --ink2:#5a6b85; --bg:#fcfdff; --line:#d7deea; --fund:#c8a13a; --exh:#2c4a78; }
+  * { box-sizing:border-box; }
+  html, body { height:100%; margin:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); background:var(--bg); }
+  .wrap { display:flex; flex-direction:column; height:100%; }
+  header { padding:14px 18px 10px; border-bottom:1px solid var(--line); }
+  h1 { margin:0; font-size:17px; font-weight:700; letter-spacing:-.2px; }
+  p.sub { margin:4px 0 0; font-size:12.5px; color:var(--ink2); line-height:1.4; }
+  .legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:9px; font-size:12px; color:var(--ink2); }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:11px; height:11px; border-radius:50%; background:var(--exh); display:inline-block; }
+  .diamond { width:11px; height:11px; background:var(--fund); display:inline-block; transform:rotate(45deg); }
+  .dash { width:18px; border-top:2px dashed var(--fund); display:inline-block; }
+  .arrow { width:18px; border-top:2px solid var(--exh); display:inline-block; position:relative; }
+  .arrow::after { content:""; position:absolute; right:-1px; top:-4px; border-left:6px solid var(--exh); border-top:3px solid transparent; border-bottom:3px solid transparent; }
+  #net { flex:1; min-height:0; width:100%; touch-action:none; }
+  footer { padding:8px 18px; font-size:11px; color:#9aa4b4; border-top:1px solid var(--line); }
+  @media (max-width:600px) {
+    header { padding:11px 13px 8px; }
+    h1 { font-size:15px; }
+    p.sub { font-size:11.5px; }
+    .legend { gap:10px; font-size:11px; }
+    footer { font-size:10px; padding:6px 13px; }
+  }
+</style></head>
+<body><div class="wrap">
+  <header>
+    <h1>Noosa 2026 — the connected companies</h1>
+    <p class="sub">The exhibitors linked to another company in the room, through a shared institutional backer or a direct deal. Drag to explore, pinch or scroll to zoom, tap a node for detail.</p>
+    <div class="legend">
+      <span><i class="dot"></i>Exhibitor (size = market cap)</span>
+      <span><i class="diamond"></i>Shared backer</span>
+      <span><i class="dash"></i>Holds a position</span>
+      <span><i class="arrow"></i>Direct deal</span>
+    </div>
+  </header>
+  <div id="net"></div>
+  <footer>Static snapshot · RadiXplore entity graph</footer>
+</div>
+<script>
+  const nodes = new vis.DataSet([{"id": "x:ASL", "label": "ASL", "group": "exhibitor", "value": 410.0, "title": "Andean Silver \u00b7 Silver/Gold"}, {"id": "x:ARL", "label": "ARL", "group": "exhibitor", "value": 144.0, "title": "Ardea Resources \u00b7 Nickel/Cobalt"}, {"id": "x:CPN", "label": "CPN", "group": "exhibitor", "value": 31.0, "title": "Caspin Resources \u00b7 Tin"}, {"id": "x:CHN", "label": "CHN", "group": "exhibitor", "value": 571.0, "title": "Chalice Mining \u00b7 Exploration/Development"}, {"id": "x:CYM", "label": "CYM", "group": "exhibitor", "value": 211.0, "title": "Cyprium Metals \u00b7 Copper"}, {"id": "x:GBM", "label": "GBM", "group": "exhibitor", "value": 118.0, "title": "GBM Resources \u00b7 Gold"}, {"id": "x:LRV", "label": "LRV", "group": "exhibitor", "value": 650.0, "title": "Larvotto Resources \u00b7 Antimony/Gold"}, {"id": "x:MGX", "label": "MGX", "group": "exhibitor", "value": 460.0, "title": "MGX Resources \u00b7 Iron Ore/Gold"}, {"id": "x:MMA", "label": "MMA", "group": "exhibitor", "value": 137.0, "title": "Maronan Metals \u00b7 Copper/Gold/Silver/Lead"}, {"id": "x:ODY", "label": "ODY", "group": "exhibitor", "value": 52.0, "title": "Odyssey Gold \u00b7 Gold"}, {"id": "x:OBM", "label": "OBM", "group": "exhibitor", "value": 2510.0, "title": "Ora Banda Mining \u00b7 Gold"}, {"id": "x:PGO", "label": "PGO", "group": "exhibitor", "value": 54.0, "title": "Pacgold Ltd \u00b7 Gold"}, {"id": "x:PNR", "label": "PNR", "group": "exhibitor", "value": 1250.0, "title": "Pantoro Gold \u00b7 Gold"}, {"id": "x:RMS", "label": "RMS", "group": "exhibitor", "value": 6430.0, "title": "Ramelius Resources \u00b7 Gold"}, {"id": "x:SHN", "label": "SHN", "group": "exhibitor", "value": 73.0, "title": "Sunshine Metals \u00b7 Gold/Base Metals"}, {"id": "x:VMS", "label": "VMS", "group": "exhibitor", "value": 16.0, "title": "Venari Minerals \u00b7 Lithium"}, {"id": "x:WTM", "label": "WTM", "group": "exhibitor", "value": 219.0, "title": "Waratah Minerals \u00b7 Gold/Copper"}, {"id": "f:1832 Asset Management L.P.", "label": "Scotiabank / 1832 AM", "group": "fund", "value": 48}, {"id": "f:State Street Corporation", "label": "State Street Corporati", "group": "fund", "value": 24}, {"id": "f:Tribeca Investment Partners Pty Ltd", "label": "Tribeca Investment Par", "group": "fund", "value": 16}]);
+  const edges = new vis.DataSet([{"from": "f:1832 Asset Management L.P.", "to": "x:ASL", "color": "#d9c48a", "dashes": true}, {"from": "f:1832 Asset Management L.P.", "to": "x:LRV", "color": "#d9c48a", "dashes": true}, {"from": "f:1832 Asset Management L.P.", "to": "x:PGO", "color": "#d9c48a", "dashes": true}, {"from": "f:1832 Asset Management L.P.", "to": "x:PNR", "color": "#d9c48a", "dashes": true}, {"from": "f:1832 Asset Management L.P.", "to": "x:SHN", "color": "#d9c48a", "dashes": true}, {"from": "f:1832 Asset Management L.P.", "to": "x:WTM", "color": "#d9c48a", "dashes": true}, {"from": "f:State Street Corporation", "to": "x:CHN", "color": "#d9c48a", "dashes": true}, {"from": "f:State Street Corporation", "to": "x:PNR", "color": "#d9c48a", "dashes": true}, {"from": "f:State Street Corporation", "to": "x:RMS", "color": "#d9c48a", "dashes": true}, {"from": "f:Tribeca Investment Partners Pty Ltd", "to": "x:CYM", "color": "#d9c48a", "dashes": true}, {"from": "f:Tribeca Investment Partners Pty Ltd", "to": "x:ODY", "color": "#d9c48a", "dashes": true}, {"from": "x:MMA", "to": "x:MGX", "label": "substantial holder", "color": "#2c4a78", "font": {"size": 10}, "arrows": "to"}, {"from": "x:GBM", "to": "x:PGO", "label": "transfer", "color": "#2c4a78", "font": {"size": 10}, "arrows": "to"}, {"from": "x:OBM", "to": "x:ARL", "label": "transfer", "color": "#2c4a78", "font": {"size": 10}, "arrows": "to"}, {"from": "x:CYM", "to": "x:RMS", "label": "joint venture", "color": "#2c4a78", "font": {"size": 10}, "arrows": "to"}, {"from": "x:CPN", "to": "x:CHN", "label": "substantial holder", "color": "#2c4a78", "font": {"size": 10}, "arrows": "to"}, {"from": "x:VMS", "to": "x:CHN", "label": "option agreement", "color": "#2c4a78", "font": {"size": 10}, "arrows": "to"}]);
+  const isPhone = window.matchMedia('(max-width:600px)').matches;
+  const net = new vis.Network(document.getElementById('net'), {nodes, edges}, {
+    groups: { exhibitor:{color:'#2c4a78',shape:'dot'}, fund:{color:'#c8a13a',shape:'diamond'} },
+    nodes: { scaling:{min: isPhone?6:8, max: isPhone?26:40}, font:{size: isPhone?15:13, color:'#14243a'} },
+    edges: { smooth:{type:'continuous'}, font:{size: isPhone?0:10} },
+    interaction: { hover:true, tooltipDelay:120, zoomView:true, dragView:true, multiselect:false },
+    physics: { barnesHut:{gravitationalConstant:-9000, springLength: isPhone?90:130}, stabilization:{iterations:220} }
+  });
+  net.once('stabilizationIterationsDone', () => net.fit({animation:{duration:400}}));
+  let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => net.fit({animation:{duration:250}}), 200); });
+</script></body></html>
